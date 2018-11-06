@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="w-25 order-first">
+	<a class='nav-item nav-link' href="/">Back</a></div>
+</div>
+<div class="w-50 mx-auto container-fluid">
+	<span class="navbar-brand mx-auto">APCYS - KVIS</span>
+</div>
+<div class="w-25 order-last">
+</div>
+{% endblock %}
+
+{% block body %}
+<div class='m-5'>
+	<h3> announces : </h3>
+	<ul>
+		{% for anc in ancs %}
+			<li>{{anc[1]}}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}

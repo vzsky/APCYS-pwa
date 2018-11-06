@@ -1,0 +1,8 @@
+{
+	"background_color": "blue",
+	"display": "standalone",
+	"icons": "favicon.png",
+	"name": "APCYS",
+
+	"start_url": "index.html"
+}
