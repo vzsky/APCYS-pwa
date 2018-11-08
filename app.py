@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session
+from flask_qrcode import QRcode
 import requests
 import json
 
@@ -8,6 +9,8 @@ app.config['SECRET_KEY'] = 'secret'
 api_url = 'http://0.0.0.0:7000/api/login'
 api_tok = 'http://0.0.0.0:7000/api/token'
 api_add = 'http://0.0.0.0:7000/api/addanc'
+
+QRcode(app)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -52,7 +55,7 @@ def index ():
 		userinfo = datare['user']
 		if userinfo['user'] == 'admin' :
 			return redirect(url_for('admin'))
-		return render_template(page, ancs=datare['announce'], first=userinfo['first'], last=userinfo['last'], user=userinfo['user'])
+		return render_template(page, ancs=datare['announce'], name=userinfo['name'], id=userinfo['id'], res=userinfo['res'], present=userinfo['present'], country=userinfo['country'], school=userinfo['school'], sciact=userinfo['sciact'], project=userinfo['project'], buddies=userinfo['buddies'])
 	return redirect(url_for('login'))
 
 @app.route('/admin', methods=['GET', 'POST'])
@@ -76,7 +79,7 @@ def admin():
 				except : 
 					pass
 				return redirect(url_for('admin'))
-			return render_template("admin.html", ancs=datare['announce'], first=userinfo['first'], last=userinfo['last'], user=userinfo['user'])
+			return render_template('admin.html', ancs=datare['announce'], name=userinfo['name'], id=userinfo['id'], res=userinfo['res'], present=userinfo['present'], country=userinfo['country'], school=userinfo['school'], sciact=userinfo['sciact'], project=userinfo['project'], buddies=userinfo['buddies'])
 	return redirect(url_for('login'))
 
 @app.route('/logout')

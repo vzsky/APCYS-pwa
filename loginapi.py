@@ -5,7 +5,11 @@ import jwt
 app = Flask(__name__)
 mysql = MySQL()
 
-from config import *
+app.config['SECRET_KEY'] = 'secret'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = 'APCYS'
+app.config['MYSQL_DATABASE_HOST'] = '10.205.240.221'
 
 #### APP MYSQL CONFIG
 
@@ -15,7 +19,7 @@ mysql.init_app(app)
 def auth(usr,pwd):
 	connection = mysql.connect()
 	cursor = connection.cursor()
-	cursor.execute("SELECT * FROM User WHERE username='" + usr + "' and password='" + pwd + "'")
+	cursor.execute("SELECT * FROM User WHERE Usr='" + usr + "' and Pwd='" + pwd + "'")
 	data = cursor.fetchone()
 	cursor.close()
 	connection.close()
@@ -45,10 +49,21 @@ def tkauth():
 		user = send["user"]
 		connection = mysql.connect()
 		cursor = connection.cursor()
-		cursor.execute("SELECT * FROM User WHERE username='" + user + "'")
+		cursor.execute("SELECT * FROM User WHERE Usr='" + user + "'")
 		data = cursor.fetchone()
-		send["first"] = data[2] #gather Firstname
-		send["last"] = data[3]	#gather Lastname
+		send["id"] = data[0] 
+		send["name"] = data[3]
+		send["res"] = data[4]
+		send["present"] = data[5]
+		send["country"] = data[6]
+		send["school"] = data[7]
+		send["sciact"] = data[8]
+		send["project"] = data[9]
+		buddies=[]
+		for x in range(10,14):
+			if data[x] is not None :
+				buddies.append(data[x]);
+		send["buddies"] = buddies
 		cursor.execute("SELECT * FROM announce")
 		anc = cursor.fetchall()
 		cursor.close()
