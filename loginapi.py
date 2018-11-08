@@ -1,3 +1,4 @@
+
 from flask import Flask, request, jsonify
 from flaskext.mysql import MySQL
 import jwt
@@ -64,6 +65,7 @@ def tkauth():
 			if data[x] is not None :
 				buddies.append(data[x]);
 		send["buddies"] = buddies
+		send["logged"] = data[14]
 		cursor.execute("SELECT * FROM announce")
 		anc = cursor.fetchall()
 		cursor.close()

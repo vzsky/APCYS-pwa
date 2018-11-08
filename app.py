@@ -55,8 +55,16 @@ def index ():
 		userinfo = datare['user']
 		if userinfo['user'] == 'admin' :
 			return redirect(url_for('admin'))
+		if userinfo['logged'] == 0:
+			redirect(url_for('terms'))
 		return render_template(page, ancs=datare['announce'], name=userinfo['name'], id=userinfo['id'], res=userinfo['res'], present=userinfo['present'], country=userinfo['country'], school=userinfo['school'], sciact=userinfo['sciact'], project=userinfo['project'], buddies=userinfo['buddies'])
 	return redirect(url_for('login'))
+
+# def terms():
+# 	if request.method == 'POST':
+# 		# change the logged db to 1
+# 		return redirect(url_for('index'))
+# 	return render_template('terms.html')
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
