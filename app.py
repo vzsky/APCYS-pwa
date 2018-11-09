@@ -7,18 +7,23 @@ import json
 app = Flask(__name__)
 mysql = MySQL()
 
+# Settings ###########################################################################################################
+
 app.config['SECRET_KEY'] = 'secret'
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'APCYS'
 app.config['MYSQL_DATABASE_HOST'] = '10.205.240.11'
 
+port = 7000
+
 mysql.init_app(app)
 
-api_url = 'http://0.0.0.0:7000/api/login'
-api_tok = 'http://0.0.0.0:7000/api/token'
-api_add = 'http://0.0.0.0:7000/api/addanc'
+api_url = 'http://0.0.0.0:'+port+'/api/login'
+api_tok = 'http://0.0.0.0:'+port+'/api/token'
+api_add = 'http://0.0.0.0:'+port+'/api/addanc'
 
+# END SETTINGS #######################################################################################################
 
 # API HERE ###########################################################################################################
 
@@ -196,4 +201,4 @@ def logout():
 	return redirect(url_for('login'))
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port='7000' ,debug = True)
+	app.run(host='0.0.0.0', port=port ,debug = True)
