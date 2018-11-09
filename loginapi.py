@@ -29,6 +29,13 @@ def auth(usr,pwd):
 	token = jwt.encode({"user":usr}, app.config['SECRET_KEY'])
 	return jsonify({"status" : "accepted" , "token" : token.decode("utf-8") })
 
+def update(id, table, col, val):
+	connection = mysql.connect()
+	cursor = connection.cursor()
+	cursor.execute("UPDATE" + table + "SET" + col + " =" + val + "WHERE id = "+id+";")
+	cursor.close()
+	connection.close()
+
 @app.route('/api/login', methods=['POST'])
 def login():
 	#AUTHEN TOKEN - NO TIMEOUT
