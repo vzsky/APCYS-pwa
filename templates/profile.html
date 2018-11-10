@@ -5,26 +5,28 @@
 	<a class='nav-item nav-link' href="/">Back</a></div>
 </div>
 <div class="w-50 mx-auto container-fluid">
-	<span class="navbar-brand mx-auto">APCYS - KVIS</span>
+	<span class="navbar-brand mx-auto">APCYS - Profile</span>
 </div>
 {% endblock %}
 
 {% block body %}
 <div class='m-5'>
-  <h4> Name : {{name}} </h4>
-  <h4> id : {{id}} </h4>
-  <h4> school : {{school}} </h4>
-  <h4> country : {{country}} </h4>
-  <h4> project : {{project}} </h4>
-  <h4> res : {{res}} </h4>
-  <h4> present : {{present}} </h4>
-  <h4> sciact : {{sciact}} </h4>
-  <h4> Buddies </h4>
-  <ul> 
-  	{% for bud in buddies %}
-  	<li>{{bud}}</li>
-  	{% endfor %}
-  </ul>
-  <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-id}}" >
+  <h2 class="heading"> {{data['name']}} </h2>
+  <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-id}}" />
+  <p><em> {{data['school']}}, {{data['country']}} </em></p>
+  <div class="box_cyan">
+    <p>Faction: <strong>{{data['sciact']}}</strong></p>
+    <p>Excursion: <strong>{{data['xcurs']}}</strong></p>
+    <p>Residence: <strong>{{data['res']}}</strong></p>
+    <P>Buddies:<ul>
+  	    {% for bud in data['buddies'] %}
+  	    <li>{{bud}}</li>
+        {% endfor %}
+    </ul>
+  </div>
+  <div class="box_jade">
+    <p>Project: <strong><a href="#">{{data['project']}}</a></strong> <br />
+    Presents at {{data['present']}}</p>
+  </div>
 </div>
 {% endblock %}

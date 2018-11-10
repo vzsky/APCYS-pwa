@@ -13,15 +13,15 @@ app.config['SECRET_KEY'] = 'secret'
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'APCYS'
-app.config['MYSQL_DATABASE_HOST'] = '10.205.240.11'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 port = 7000
 
 mysql.init_app(app)
 
-api_url = 'http://0.0.0.0:'+port+'/api/login'
-api_tok = 'http://0.0.0.0:'+port+'/api/token'
-api_add = 'http://0.0.0.0:'+port+'/api/addanc'
+api_url = 'http://0.0.0.0:'+str(port)+'/api/login'
+api_tok = 'http://0.0.0.0:'+str(port)+'/api/token'
+api_add = 'http://0.0.0.0:'+str(port)+'/api/addanc'
 
 # END SETTINGS #######################################################################################################
 
@@ -71,6 +71,8 @@ def tkauth():
 		cursor = connection.cursor()
 		cursor.execute("SELECT * FROM User WHERE Usr='" + user + "'")
 		data = cursor.fetchone()
+		#################################################################################
+		# Assign key value for each mysql column
 		send["id"] = data[0] 
 		send["name"] = data[3]
 		send["res"] = data[4]
@@ -79,12 +81,15 @@ def tkauth():
 		send["school"] = data[7]
 		send["sciact"] = data[8]
 		send["project"] = data[9]
-		buddies=[]
-		for x in range(10,14):
-			if data[x] is not None :
-				buddies.append(data[x]);
-		send["buddies"] = buddies
+		# buddies = []
+		# for x in range(10,14):
+		# 	if data[x] is not None :
+		# 		buddies.append(data[x]);
+		# send["buddies"] = buddies
+		send["buddies"] = [data[x] for x in range(10,14) if data[x] is not None]
 		send["logged"] = data[14]
+		send["xcurs"] = data[15]
+		#################################################################################
 		cursor.execute("SELECT * FROM announce")
 		anc = cursor.fetchall()
 		cursor.close()
@@ -138,9 +143,9 @@ def login():
 		print(row_data)
 		r = requests.post(url=api_url, json=row_data)
 		datare = r.json()
-		token = datare['token']
-		print(token)
-		session['token'] = token
+		if datare['status'] == 'accepted':
+			token = datare['token']
+			session['token'] = token
 		return redirect(url_for('login'))
 	return render_template("login.html")
 
@@ -161,15 +166,16 @@ def index ():
 		if userinfo['user'] == 'admin' :
 			return redirect(url_for('admin'))
 		if userinfo['logged'] == 0:
-			return terms(request.method, userinfo['id'])
-		return render_template(page, ancs=datare['announce'], name=userinfo['name'], id=userinfo['id'], res=userinfo['res'], present=userinfo['present'], country=userinfo['country'], school=userinfo['school'], sciact=userinfo['sciact'], project=userinfo['project'], buddies=userinfo['buddies'])
+			return terms(request.method, userinfo['id'], userinfo['name'])
+		return render_template(page, data=datare['user'], ancs = datare['announce'])
 	return redirect(url_for('login'))
 
-def terms(method, id):
+def terms(method, id, name):
 	if method == 'POST':
 		update(str(id), "User", "Logged", "1")
+		update(str(id), "User", "Nmae", "1", request.form['name'])
 		return redirect(url_for('index'))
-	return render_template('terms.html')
+	return render_template('terms.html', name=name)
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
@@ -192,7 +198,7 @@ def admin():
 				except : 
 					pass
 				return redirect(url_for('admin'))
-			return render_template('admin.html', ancs=datare['announce'], name=userinfo['name'], id=userinfo['id'], res=userinfo['res'], present=userinfo['present'], country=userinfo['country'], school=userinfo['school'], sciact=userinfo['sciact'], project=userinfo['project'], buddies=userinfo['buddies'])
+			return render_template('admin.html', data=datare['user'], ancs = datare['announce'])
 	return redirect(url_for('login'))
 
 @app.route('/logout')
