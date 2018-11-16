@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- CSS : BOOTStrap -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -19,18 +20,18 @@
 <body> 
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  {% block header %}
 	  	<div class="w-25 order-first">
+	  	 {% block header %}{% endblock %}
 		</div>
 		<div class="w-50 mx-auto container-fluid">
 			<span class="navbar-brand mx-auto">APCYS - KVIS</span>
 		</div>
 		<div class="w-25 order-last">
+  			<a href="/logout" class='float-right'><button class='btn btn-primary'>Logout</button></a>
 		</div>
-	  {% endblock %}
 	</nav>
 
-	<div class='m-5'>
+	<div class='m-3'>
 		{% block body %}{% endblock %}
 	</div>
 

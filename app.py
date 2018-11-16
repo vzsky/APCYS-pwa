@@ -142,7 +142,10 @@ def login():
 		row_data = {"user": usr,"pass":pwd}
 		print(row_data)
 		r = requests.post(url=api_url, json=row_data)
-		datare = r.json()
+		try :
+			datare = r.json()
+		except :
+			return "<h1> Mysql is closed </h1>"
 		if datare['status'] == 'accepted':
 			token = datare['token']
 			session['token'] = token
@@ -159,7 +162,10 @@ def index ():
 	if 'token' in session:
 		headers = {'token': session['token']}
 		r = requests.post(url=api_tok, headers=headers)
-		datare = r.json()
+		try :
+			datare = r.json()
+		except :
+			return "<h1> Mysql is closed </h1>"
 		if 'error' in datare :
 			return redirect(url_for('admin'))
 		userinfo = datare['user']
@@ -172,8 +178,11 @@ def index ():
 
 def terms(method, id, name):
 	if method == 'POST':
+		if name=='username':
+			return redirect(url_for("index"))
 		update(str(id), "User", "Logged", "1")
-		update(str(id), "User", "Nmae", "1", request.form['name'])
+		n = '"'+request.form['name']+'"'
+		update(str(id), "User", "Name", n)
 		return redirect(url_for('index'))
 	return render_template('terms.html', name=name)
 
@@ -204,6 +213,24 @@ def admin():
 @app.route('/logout')
 def logout():
 	session.pop('token', None)
+	return redirect(url_for('login'))
+
+@app.route('/announcement/<id>')
+def announcement(id):
+	if 'token' in session : 
+		headers = {'token': session['token']}
+		r = requests.post(url=api_tok, headers=headers)
+		try :
+			datare = r.json()
+		except :
+			return "<h1> Mysql is closed </h1>"
+		if 'error' in datare :
+			return redirect(url_for('login'))
+		ancs = datare['announce']
+		for anc in ancs :
+			if int(anc[0])==int(id) :
+				return render_template('sanc.html', anc=anc)
+		return render_template('noanc.html')
 	return redirect(url_for('login'))
 
 if __name__ == "__main__":

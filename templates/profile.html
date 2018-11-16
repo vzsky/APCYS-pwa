@@ -1,20 +1,14 @@
 {% extends "base.html" %}
 
 {% block header %}
-<div class="w-25 order-first">
-	<a class='nav-item nav-link' href="/">Back</a></div>
-</div>
-<div class="w-50 mx-auto container-fluid">
-	<span class="navbar-brand mx-auto">APCYS - Profile</span>
-</div>
+  <a class='nav-item nav-link' href="/">Back</a></div>
 {% endblock %}
 
 {% block body %}
-<div class='m-5'>
   <h2 class="heading"> {{data['name']}} </h2>
   <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-id}}" />
   <p><em> {{data['school']}}, {{data['country']}} </em></p>
-  <div class="box_cyan">
+  <div class="box box_cyan">
     <p>Faction: <strong>{{data['sciact']}}</strong></p>
     <p>Excursion: <strong>{{data['xcurs']}}</strong></p>
     <p>Residence: <strong>{{data['res']}}</strong></p>
@@ -24,9 +18,8 @@
         {% endfor %}
     </ul>
   </div>
-  <div class="box_jade">
+  <div class="box box_jade">
     <p>Project: <strong><a href="#">{{data['project']}}</a></strong> <br />
     Presents at {{data['present']}}</p>
   </div>
-</div>
 {% endblock %}
