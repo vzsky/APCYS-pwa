@@ -11,7 +11,7 @@ mysql = MySQL()
 
 app.config['SECRET_KEY'] = 'secret'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
 app.config['MYSQL_DATABASE_DB'] = 'APCYS'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
@@ -19,9 +19,9 @@ port = 7000
 
 mysql.init_app(app)
 
-api_url = 'http://0.0.0.0:'+str(port)+'/api/login'
-api_tok = 'http://0.0.0.0:'+str(port)+'/api/token'
-api_add = 'http://0.0.0.0:'+str(port)+'/api/addanc'
+api_url = 'https://localhost:'+str(port)+'/api/login'
+api_tok = 'https://localhost:'+str(port)+'/api/token'
+api_add = 'https://localhost:'+str(port)+'/api/addanc'
 
 # END SETTINGS #######################################################################################################
 
@@ -127,7 +127,7 @@ def addanc():
 def login():
 	if 'token' in session:
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers)
+		r = requests.post(url=api_tok, headers=headers, verify=False)
 		datare = r.json()
 		if 'error' in datare :
 			return render_template("login.html")
@@ -141,7 +141,8 @@ def login():
 		pwd = request.form['pwd']
 		row_data = {"user": usr,"pass":pwd}
 		print(row_data)
-		r = requests.post(url=api_url, json=row_data)
+		r = requests.post(url=api_url, json=row_data, verify=False) # Need to get a cert and enable back verify
+		print(r)
 		try :
 			datare = r.json()
 		except :
@@ -161,7 +162,7 @@ def index ():
 		page = 'index.html'
 	if 'token' in session:
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers)
+		r = requests.post(url=api_tok, headers=headers, verify=False)
 		try :
 			datare = r.json()
 		except :
@@ -190,7 +191,7 @@ def terms(method, id, name):
 def admin():
 	if 'token' in session : 
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers)
+		r = requests.post(url=api_tok, headers=headers, verify=False)
 		datare = r.json()
 		if 'error' in datare :
 			return redirect(url_for('login'))
@@ -203,7 +204,7 @@ def admin():
 					topic = request.form['topic']
 					content = request.form['content']
 					row_data = {"topic": topic, "content":content}
-					r = requests.post(url=api_add, json=row_data)
+					r = requests.post(url=api_add, json=row_data, verify=False)
 				except : 
 					pass
 				return redirect(url_for('admin'))
@@ -219,7 +220,7 @@ def logout():
 def announcement(id):
 	if 'token' in session : 
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers)
+		r = requests.post(url=api_tok, headers=headers, verify=False)
 		try :
 			datare = r.json()
 		except :
@@ -234,4 +235,4 @@ def announcement(id):
 	return redirect(url_for('login'))
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=port ,debug = True)
+	app.run(host='0.0.0.0', port=port ,debug = True, ssl_context='adhoc')
