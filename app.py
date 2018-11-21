@@ -28,9 +28,13 @@ api_add = 'https://localhost:'+str(port)+'/api/addanc'
 # API HERE ###########################################################################################################
 
 def auth(usr,pwd):
+	for x in ['#', "'", '"', ')', ';']:
+		if (x in usr or x in pwd):
+			return jsonify({"status" : "denied"})
+	print('authing')
 	connection = mysql.connect()
 	cursor = connection.cursor()
-	cursor.execute("SELECT * FROM User WHERE Usr='" + usr + "' and Pwd='" + pwd + "'")
+	cursor.execute("SELECT * FROM User WHERE username='" + usr + "' and password='" + pwd + "'")
 	data = cursor.fetchone()
 	cursor.close()
 	connection.close()
@@ -69,31 +73,35 @@ def tkauth():
 		user = send["user"]
 		connection = mysql.connect()
 		cursor = connection.cursor()
-		cursor.execute("SELECT * FROM User WHERE Usr='" + user + "'")
+		cursor.execute("SELECT * FROM user WHERE username='" + user + "'")
 		data = cursor.fetchone()
+		print("tokenver")
 		#################################################################################
 		# Assign key value for each mysql column
 		send["id"] = data[0] 
-		send["name"] = data[3]
-		send["res"] = data[4]
-		send["present"] = data[5]
-		send["country"] = data[6]
+		send['user'] = data[1]
+		send["firstn"] = data[3]
+		send['lastn'] = data[4]
+		send["country"] = data[5]
+		send["qrcode"] = data[6]
 		send["school"] = data[7]
-		send["sciact"] = data[8]
-		send["project"] = data[9]
-		# buddies = []
-		# for x in range(10,14):
-		# 	if data[x] is not None :
-		# 		buddies.append(data[x]);
-		# send["buddies"] = buddies
-		send["buddies"] = [data[x] for x in range(10,14) if data[x] is not None]
-		send["logged"] = data[14]
+		send["gender"] = data[8]
+		send["position"] = data[9]
+		send["residence"] = data[10]
+		send["project"] = data[11]
+		send["time"] = data[12]
+		send["room"] = data[13]
+		send["sciact"] = data[14]
 		send["xcurs"] = data[15]
+		send["buddies"] = [data[x] for x in range(16,19) if data[x] is not None]
+		send["logged"] = data[20]
 		#################################################################################
 		cursor.execute("SELECT * FROM announce")
 		anc = cursor.fetchall()
+		print(anc)
 		cursor.close()
 		connection.close()
+		print("closed")
 	except:
 		return jsonify({"error":"authen error"})
 	return jsonify({"user":send,"announce":anc})
@@ -143,10 +151,12 @@ def login():
 		print(row_data)
 		r = requests.post(url=api_url, json=row_data, verify=False) # Need to get a cert and enable back verify
 		print(r)
+		print("request")
 		try :
 			datare = r.json()
 		except :
 			return "<h1> Mysql is closed </h1>"
+		print(datare)
 		if datare['status'] == 'accepted':
 			token = datare['token']
 			session['token'] = token
@@ -163,6 +173,7 @@ def index ():
 	if 'token' in session:
 		headers = {'token': session['token']}
 		r = requests.post(url=api_tok, headers=headers, verify=False)
+		print(r)
 		try :
 			datare = r.json()
 		except :
@@ -172,18 +183,22 @@ def index ():
 		userinfo = datare['user']
 		if userinfo['user'] == 'admin' :
 			return redirect(url_for('admin'))
-		if userinfo['logged'] == 0:
-			return terms(request.method, userinfo['id'], userinfo['name'])
+		print(userinfo['logged'])
+		print(userinfo['id'], userinfo['user'])
+		if userinfo['logged'] == "0":
+			return terms(request.method, userinfo['id'], userinfo['user'], userinfo['firstn'], userinfo['lastn'])
 		return render_template(page, data=datare['user'], ancs = datare['announce'])
 	return redirect(url_for('login'))
 
-def terms(method, id, name):
+def terms(method, id, usr, f, l):
+	name = f + " " + l
+	if usr=='terms':
+		return render_template('terms.html', name=name)
 	if method == 'POST':
-		if name=='username':
-			return redirect(url_for("index"))
 		update(str(id), "User", "Logged", "1")
-		n = '"'+request.form['name']+'"'
-		update(str(id), "User", "Name", n)
+		n = [x for x in request.form['name'].split(' ')]
+		update(str(id), "User", "first", "'"+n[0]+"'")
+		update(str(id), "User", "last","'"+n[1]+"'")
 		return redirect(url_for('index'))
 	return render_template('terms.html', name=name)
 
