@@ -28,13 +28,9 @@ api_add = 'https://localhost:'+str(port)+'/api/addanc'
 # API HERE ###########################################################################################################
 
 def auth(usr,pwd):
-	for x in ['#', "'", '"', ')', ';']:
-		if (x in usr or x in pwd):
-			return jsonify({"status" : "denied"})
-	print('authing')
 	connection = mysql.connect()
 	cursor = connection.cursor()
-	cursor.execute("SELECT * FROM User WHERE username='" + usr + "' and password='" + pwd + "'")
+	cursor.execute("SELECT * FROM User WHERE username = %s and password = %s;", (usr, pwd))
 	data = cursor.fetchone()
 	cursor.close()
 	connection.close()
@@ -46,8 +42,8 @@ def auth(usr,pwd):
 def update(id, table, col, val):
 	connection = mysql.connect()
 	cursor = connection.cursor()
-	print("Run : UPDATE " + table + " SET " + col + " = " + val + " WHERE id = "+id+";")
-	cursor.execute("UPDATE " + table + " SET " + col + " = " + val + " WHERE id = "+id+";")
+	print("Run : UPDATE %s SET %s = %s WHERE id = %S;")
+	cursor.execute("UPDATE %s SET %s = %s WHERE id = %S;", (table, col, val, id))
 	connection.commit()
 	cursor.close()
 	connection.close()
@@ -73,7 +69,7 @@ def tkauth():
 		user = send["user"]
 		connection = mysql.connect()
 		cursor = connection.cursor()
-		cursor.execute("SELECT * FROM user WHERE username='" + user + "'")
+		cursor.execute("SELECT * FROM user WHERE username = %s;", (user))
 		data = cursor.fetchone()
 		print("tokenver")
 		#################################################################################
@@ -244,10 +240,17 @@ def announcement(id):
 			return redirect(url_for('login'))
 		ancs = datare['announce']
 		for anc in ancs :
-			if int(anc[0])==int(id) :
-				return render_template('sanc.html', anc=anc)
+			try :
+				if int(anc[0])==int(id) :
+					return render_template('sanc.html', anc=anc)
+			except :
+				return redirect(url_for("E404"))
 		return render_template('noanc.html')
 	return redirect(url_for('login'))
+
+@app.errorhandler(404)
+def E404(e):
+    return render_template('404.html'), 404
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=port ,debug = True, ssl_context='adhoc')
