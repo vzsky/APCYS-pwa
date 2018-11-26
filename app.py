@@ -19,46 +19,54 @@ port = 7000
 
 mysql.init_app(app)
 
-api_url = 'https://localhost:'+str(port)+'/api/login'
-api_tok = 'https://localhost:'+str(port)+'/api/token'
-api_add = 'https://localhost:'+str(port)+'/api/addanc'
+api_url = 'https://localhost:' + str(port) + '/api/login'
+api_tok = 'https://localhost:' + str(port) + '/api/token'
+api_add = 'https://localhost:' + str(port) + '/api/addanc'
 
 # END SETTINGS #######################################################################################################
 
 # API HERE ###########################################################################################################
 
-def auth(usr,pwd):
+
+def auth(usr, pwd):
 	connection = mysql.connect()
 	cursor = connection.cursor()
-	cursor.execute("SELECT * FROM User WHERE username = %s and password = %s;", (usr, pwd))
+	cursor.execute(
+	    "SELECT * FROM User WHERE username = %s and password = %s;", (usr, pwd)
+	)
 	data = cursor.fetchone()
 	cursor.close()
 	connection.close()
 	if data is None:
-		return jsonify({"status" : "denied"})
-	token = jwt.encode({"user":usr}, app.config['SECRET_KEY'])
-	return jsonify({"status" : "accepted" , "token" : token.decode("utf-8") })
+		return jsonify({"status": "denied"})
+	token = jwt.encode({"user": usr}, app.config['SECRET_KEY'])
+	return jsonify({"status": "accepted", "token": token.decode("utf-8")})
+
 
 def update(id, table, col, val):
 	connection = mysql.connect()
 	cursor = connection.cursor()
 	print("Run : UPDATE %s SET %s = %s WHERE id = %S;")
-	cursor.execute("UPDATE %s SET %s = %s WHERE id = %S;", (table, col, val, id))
+	cursor.execute(
+	    "UPDATE %s SET %s = %s WHERE id = %S;", (table, col, val, id)
+	)
 	connection.commit()
 	cursor.close()
 	connection.close()
 
+
 @app.route('/api/login', methods=['POST'])
 def apilogin():
 	#AUTHEN TOKEN - NO TIMEOUT
-	try :
+	try:
 		data = request.json
 		usr = data["user"]
 		pwd = data["pass"]
-		token = auth(usr,pwd)
-	except : 
-		token = auth(usr,pwd)
+		token = auth(usr, pwd)
+	except:
+		token = auth(usr, pwd)
 	return token
+
 
 @app.route('/api/token', methods=['POST'])
 def tkauth():
@@ -74,7 +82,7 @@ def tkauth():
 		print("tokenver")
 		#################################################################################
 		# Assign key value for each mysql column
-		send["id"] = data[0] 
+		send["id"] = data[0]
 		send['user'] = data[1]
 		send["firstn"] = data[3]
 		send['lastn'] = data[4]
@@ -89,7 +97,9 @@ def tkauth():
 		send["room"] = data[13]
 		send["sciact"] = data[14]
 		send["xcurs"] = data[15]
-		send["buddies"] = [data[x] for x in range(16,19) if data[x] is not None]
+		send["buddies"] = [
+		    data[x] for x in range(16, 19) if data[x] is not None
+		]
 		send["logged"] = data[20]
 		#################################################################################
 		cursor.execute("SELECT * FROM announce")
@@ -99,20 +109,21 @@ def tkauth():
 		connection.close()
 		print("closed")
 	except:
-		return jsonify({"error":"authen error"})
-	return jsonify({"user":send,"announce":anc})
+		return jsonify({"error": "authen error"})
+	return jsonify({"user": send, "announce": anc})
+
 
 @app.route('/api/addanc', methods=['POST'])
 def addanc():
-	try :
-		if 'token' in session : 
+	try:
+		if 'token' in session:
 			headers = {'token': session['token']}
 			r = requests.post(url=api_tok, headers=headers, verify=False)
 			datare = r.json()
-			if 'error' in datare :
+			if 'error' in datare:
 				return redirect(url_for('login'))
 			userinfo = datare['user']
-			if userinfo['user'] == 'admin' :
+			if userinfo['user'] == 'admin':
 				data = request.json
 				top = data["topic"]
 				con = data["content"]
@@ -120,20 +131,25 @@ def addanc():
 				cursor = connection.cursor()
 				cursor.execute("SELECT MAX(id) from announce")
 				maxid = cursor.fetchone()
-				try : 
+				try:
 					postid = maxid[0] + 1
-				except : 
+				except:
 					postid = 0
-				cursor.execute("INSERT INTO announce (id,topic,content) VALUES (%s,%s,%s)",(postid, top, con))
+				cursor.execute(
+				    "INSERT INTO announce (id,topic,content) VALUES (%s,%s,%s)",
+				    (postid, top, con)
+				)
 				connection.commit()
 				status = "POSTed"
 				cursor.close()
 				connection.close()
-	except :
+	except:
 		status = "error"
 	return status
 
+
 #API END HERE #######################################################################################################################
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -141,24 +157,26 @@ def login():
 		headers = {'token': session['token']}
 		r = requests.post(url=api_tok, headers=headers, verify=False)
 		datare = r.json()
-		if 'error' in datare :
+		if 'error' in datare:
 			return render_template("login.html")
 		userinfo = datare['user']
-		if userinfo['user'] == 'admin' :
+		if userinfo['user'] == 'admin':
 			return redirect(url_for('admin'))
 		return redirect(url_for('index'))
 
 	if request.method == 'POST':
 		usr = request.form['usr']
 		pwd = request.form['pwd']
-		row_data = {"user": usr,"pass":pwd}
+		row_data = {"user": usr, "pass": pwd}
 		print(row_data)
-		r = requests.post(url=api_url, json=row_data, verify=False) # Need to get a cert and enable back verify
+		r = requests.post(
+		    url=api_url, json=row_data, verify=False
+		)  # Need to get a cert and enable back verify
 		print(r)
 		print("request")
-		try :
+		try:
 			datare = r.json()
-		except :
+		except:
 			return "<h1> Mysql is closed </h1>"
 		print(datare)
 		if datare['status'] == 'accepted':
@@ -167,98 +185,117 @@ def login():
 		return redirect(url_for('login'))
 	return render_template("login.html")
 
+
 @app.route('/', methods=['GET', 'POST'])
-def index ():
-	try :
+def index():
+	try:
 		page = request.args.get('page')
-		page = page + '.html'
-	except :
+		# Prevent request for unauthorized pages
+		# Whitelist for pages can be added below
+		if page in ['profile', 'announce']:
+			page = page + '.html'
+		else:
+			page = 'index.html'
+	except:
 		page = 'index.html'
 	if 'token' in session:
 		headers = {'token': session['token']}
 		r = requests.post(url=api_tok, headers=headers, verify=False)
 		print(r)
-		try :
+		try:
 			datare = r.json()
-		except :
+		except:
 			return "<h1> Mysql is closed </h1>"
-		if 'error' in datare :
+		if 'error' in datare:
 			return redirect(url_for('admin'))
 		userinfo = datare['user']
-		if userinfo['user'] == 'admin' :
+		if userinfo['user'] == 'admin':
 			return redirect(url_for('admin'))
 		print(userinfo['logged'])
 		print(userinfo['id'], userinfo['user'])
 		if userinfo['logged'] == "0":
-			return terms(request.method, userinfo['id'], userinfo['user'], userinfo['firstn'], userinfo['lastn'])
-		return render_template(page, data=datare['user'], ancs = datare['announce'])
+			return terms(
+			    request.method, userinfo['id'], userinfo['user'],
+			    userinfo['firstn'], userinfo['lastn']
+			)
+		return render_template(
+		    page, data=datare['user'], ancs=datare['announce']
+		)
 	return redirect(url_for('login'))
+
 
 def terms(method, id, usr, f, l):
 	name = f + " " + l
-	if usr=='terms':
+	if usr == 'terms':
 		return render_template('terms.html', name=name)
 	if method == 'POST':
 		update(str(id), "User", "Logged", "1")
 		n = [x for x in request.form['name'].split(' ')]
-		update(str(id), "User", "first", "'"+n[0]+"'")
-		update(str(id), "User", "last","'"+n[1]+"'")
+		update(str(id), "User", "first", "'" + n[0] + "'")
+		update(str(id), "User", "last", "'" + n[1] + "'")
 		return redirect(url_for('index'))
 	return render_template('terms.html', name=name)
 
+
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
-	if 'token' in session : 
+	if 'token' in session:
 		headers = {'token': session['token']}
 		r = requests.post(url=api_tok, headers=headers, verify=False)
 		datare = r.json()
-		if 'error' in datare :
+		if 'error' in datare:
 			return redirect(url_for('login'))
 		userinfo = datare['user']
-		if userinfo['user'] == 'admin' :
+		if userinfo['user'] == 'admin':
 			if request.method == 'POST':
 				print('post')
-				try :
+				try:
 					print('trying')
 					topic = request.form['topic']
 					content = request.form['content']
-					row_data = {"topic": topic, "content":content}
+					row_data = {"topic": topic, "content": content}
 					r = requests.post(url=api_add, json=row_data, verify=False)
-				except : 
+				except:
 					pass
 				return redirect(url_for('admin'))
-			return render_template('admin.html', data=datare['user'], ancs = datare['announce'])
+			return render_template(
+			    'admin.html', data=datare['user'], ancs=datare['announce']
+			)
 	return redirect(url_for('login'))
+
 
 @app.route('/logout')
 def logout():
 	session.pop('token', None)
 	return redirect(url_for('login'))
 
+
 @app.route('/announcement/<id>')
 def announcement(id):
-	if 'token' in session : 
+	if 'token' in session:
 		headers = {'token': session['token']}
 		r = requests.post(url=api_tok, headers=headers, verify=False)
-		try :
+		try:
 			datare = r.json()
-		except :
+		except:
 			return "<h1> Mysql is closed </h1>"
-		if 'error' in datare :
+		if 'error' in datare:
 			return redirect(url_for('login'))
 		ancs = datare['announce']
-		for anc in ancs :
-			try :
-				if int(anc[0])==int(id) :
+		for anc in ancs:
+			try:
+				if int(anc[0]) == int(id):
 					return render_template('sanc.html', anc=anc)
-			except :
+			except:
 				return redirect(url_for("E404"))
 		return render_template('noanc.html')
 	return redirect(url_for('login'))
 
+
 @app.errorhandler(404)
 def E404(e):
-    return render_template('404.html'), 404
+	return render_template('404.html'), 404
+
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=port ,debug = True, ssl_context='adhoc')
+	app.run(host='0.0.0.0', port=port, debug=True, ssl_context='adhoc')
