@@ -252,7 +252,7 @@ def announcement(id):
 				if int(anc[0])==int(id) :
 					return render_template('sanc.html', anc=anc)
 			except :
-				return redirect(url_for("E404"))
+				return render_template('404.html'), 404
 		return render_template('noanc.html')
 	return redirect(url_for('login'))
 
