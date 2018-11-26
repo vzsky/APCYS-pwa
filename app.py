@@ -46,9 +46,9 @@ def auth(usr, pwd):
 def update(id, table, col, val):
 	connection = mysql.connect()
 	cursor = connection.cursor()
-	print("Run : UPDATE %s SET %s = %s WHERE id = %S;")
+	print("Run : UPDATE %s SET %s = %s WHERE id = %s;")
 	cursor.execute(
-	    "UPDATE %s SET %s = %s WHERE id = %S;", (table, col, val, id)
+	    "UPDATE %s SET %s = %s WHERE id = %s;", (table, col, val, id)
 	)
 	connection.commit()
 	cursor.close()
