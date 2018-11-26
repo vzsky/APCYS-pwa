@@ -11,7 +11,7 @@ mysql = MySQL()
 
 app.config['SECRET_KEY'] = 'secret'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
 app.config['MYSQL_DATABASE_DB'] = 'APCYS'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
@@ -19,9 +19,9 @@ port = 7000
 
 mysql.init_app(app)
 
-api_url = 'http://0.0.0.0:'+str(port)+'/api/login'
-api_tok = 'http://0.0.0.0:'+str(port)+'/api/token'
-api_add = 'http://0.0.0.0:'+str(port)+'/api/addanc'
+api_url = 'https://localhost:'+str(port)+'/api/login'
+api_tok = 'https://localhost:'+str(port)+'/api/token'
+api_add = 'https://localhost:'+str(port)+'/api/addanc'
 
 # END SETTINGS #######################################################################################################
 
@@ -30,7 +30,7 @@ api_add = 'http://0.0.0.0:'+str(port)+'/api/addanc'
 def auth(usr,pwd):
 	connection = mysql.connect()
 	cursor = connection.cursor()
-	cursor.execute("SELECT * FROM User WHERE Usr='" + usr + "' and Pwd='" + pwd + "'")
+	cursor.execute("SELECT * FROM User WHERE username = %s and password = %s;", (usr, pwd))
 	data = cursor.fetchone()
 	cursor.close()
 	connection.close()
@@ -42,8 +42,8 @@ def auth(usr,pwd):
 def update(id, table, col, val):
 	connection = mysql.connect()
 	cursor = connection.cursor()
-	print("Run : UPDATE " + table + " SET " + col + " = " + val + " WHERE id = "+id+";")
-	cursor.execute("UPDATE " + table + " SET " + col + " = " + val + " WHERE id = "+id+";")
+	print("Run : UPDATE %s SET %s = %s WHERE id = %S;")
+	cursor.execute("UPDATE %s SET %s = %s WHERE id = %S;", (table, col, val, id))
 	connection.commit()
 	cursor.close()
 	connection.close()
@@ -69,31 +69,35 @@ def tkauth():
 		user = send["user"]
 		connection = mysql.connect()
 		cursor = connection.cursor()
-		cursor.execute("SELECT * FROM User WHERE Usr='" + user + "'")
+		cursor.execute("SELECT * FROM user WHERE username = %s;", (user))
 		data = cursor.fetchone()
+		print("tokenver")
 		#################################################################################
 		# Assign key value for each mysql column
 		send["id"] = data[0] 
-		send["name"] = data[3]
-		send["res"] = data[4]
-		send["present"] = data[5]
-		send["country"] = data[6]
+		send['user'] = data[1]
+		send["firstn"] = data[3]
+		send['lastn'] = data[4]
+		send["country"] = data[5]
+		send["qrcode"] = data[6]
 		send["school"] = data[7]
-		send["sciact"] = data[8]
-		send["project"] = data[9]
-		# buddies = []
-		# for x in range(10,14):
-		# 	if data[x] is not None :
-		# 		buddies.append(data[x]);
-		# send["buddies"] = buddies
-		send["buddies"] = [data[x] for x in range(10,14) if data[x] is not None]
-		send["logged"] = data[14]
+		send["gender"] = data[8]
+		send["position"] = data[9]
+		send["residence"] = data[10]
+		send["project"] = data[11]
+		send["time"] = data[12]
+		send["room"] = data[13]
+		send["sciact"] = data[14]
 		send["xcurs"] = data[15]
+		send["buddies"] = [data[x] for x in range(16,19) if data[x] is not None]
+		send["logged"] = data[20]
 		#################################################################################
 		cursor.execute("SELECT * FROM announce")
 		anc = cursor.fetchall()
+		print(anc)
 		cursor.close()
 		connection.close()
+		print("closed")
 	except:
 		return jsonify({"error":"authen error"})
 	return jsonify({"user":send,"announce":anc})
@@ -101,22 +105,30 @@ def tkauth():
 @app.route('/api/addanc', methods=['POST'])
 def addanc():
 	try :
-		data = request.json
-		top = data["topic"]
-		con = data["content"]
-		connection = mysql.connect()
-		cursor = connection.cursor()
-		cursor.execute("SELECT MAX(id) from announce")
-		maxid = cursor.fetchone()
-		try : 
-			postid = maxid[0] + 1
-		except : 
-			postid = 0
-		cursor.execute("INSERT INTO announce (id,topic,content) VALUES (%s,%s,%s)",(postid, top, con))
-		connection.commit()
-		status = "POSTed"
-		cursor.close()
-		connection.close()
+		if 'token' in session : 
+			headers = {'token': session['token']}
+			r = requests.post(url=api_tok, headers=headers, verify=False)
+			datare = r.json()
+			if 'error' in datare :
+				return redirect(url_for('login'))
+			userinfo = datare['user']
+			if userinfo['user'] == 'admin' :
+				data = request.json
+				top = data["topic"]
+				con = data["content"]
+				connection = mysql.connect()
+				cursor = connection.cursor()
+				cursor.execute("SELECT MAX(id) from announce")
+				maxid = cursor.fetchone()
+				try : 
+					postid = maxid[0] + 1
+				except : 
+					postid = 0
+				cursor.execute("INSERT INTO announce (id,topic,content) VALUES (%s,%s,%s)",(postid, top, con))
+				connection.commit()
+				status = "POSTed"
+				cursor.close()
+				connection.close()
 	except :
 		status = "error"
 	return status
@@ -127,7 +139,7 @@ def addanc():
 def login():
 	if 'token' in session:
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers)
+		r = requests.post(url=api_tok, headers=headers, verify=False)
 		datare = r.json()
 		if 'error' in datare :
 			return render_template("login.html")
@@ -141,11 +153,14 @@ def login():
 		pwd = request.form['pwd']
 		row_data = {"user": usr,"pass":pwd}
 		print(row_data)
-		r = requests.post(url=api_url, json=row_data)
+		r = requests.post(url=api_url, json=row_data, verify=False) # Need to get a cert and enable back verify
+		print(r)
+		print("request")
 		try :
 			datare = r.json()
 		except :
 			return "<h1> Mysql is closed </h1>"
+		print(datare)
 		if datare['status'] == 'accepted':
 			token = datare['token']
 			session['token'] = token
@@ -161,7 +176,8 @@ def index ():
 		page = 'index.html'
 	if 'token' in session:
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers)
+		r = requests.post(url=api_tok, headers=headers, verify=False)
+		print(r)
 		try :
 			datare = r.json()
 		except :
@@ -171,18 +187,22 @@ def index ():
 		userinfo = datare['user']
 		if userinfo['user'] == 'admin' :
 			return redirect(url_for('admin'))
-		if userinfo['logged'] == 0:
-			return terms(request.method, userinfo['id'], userinfo['name'])
+		print(userinfo['logged'])
+		print(userinfo['id'], userinfo['user'])
+		if userinfo['logged'] == "0":
+			return terms(request.method, userinfo['id'], userinfo['user'], userinfo['firstn'], userinfo['lastn'])
 		return render_template(page, data=datare['user'], ancs = datare['announce'])
 	return redirect(url_for('login'))
 
-def terms(method, id, name):
+def terms(method, id, usr, f, l):
+	name = f + " " + l
+	if usr=='terms':
+		return render_template('terms.html', name=name)
 	if method == 'POST':
-		if name=='username':
-			return redirect(url_for("index"))
 		update(str(id), "User", "Logged", "1")
-		n = '"'+request.form['name']+'"'
-		update(str(id), "User", "Name", n)
+		n = [x for x in request.form['name'].split(' ')]
+		update(str(id), "User", "first", "'"+n[0]+"'")
+		update(str(id), "User", "last","'"+n[1]+"'")
 		return redirect(url_for('index'))
 	return render_template('terms.html', name=name)
 
@@ -190,7 +210,7 @@ def terms(method, id, name):
 def admin():
 	if 'token' in session : 
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers)
+		r = requests.post(url=api_tok, headers=headers, verify=False)
 		datare = r.json()
 		if 'error' in datare :
 			return redirect(url_for('login'))
@@ -203,7 +223,7 @@ def admin():
 					topic = request.form['topic']
 					content = request.form['content']
 					row_data = {"topic": topic, "content":content}
-					r = requests.post(url=api_add, json=row_data)
+					r = requests.post(url=api_add, json=row_data, verify=False)
 				except : 
 					pass
 				return redirect(url_for('admin'))
@@ -219,7 +239,7 @@ def logout():
 def announcement(id):
 	if 'token' in session : 
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers)
+		r = requests.post(url=api_tok, headers=headers, verify=False)
 		try :
 			datare = r.json()
 		except :
@@ -228,10 +248,17 @@ def announcement(id):
 			return redirect(url_for('login'))
 		ancs = datare['announce']
 		for anc in ancs :
-			if int(anc[0])==int(id) :
-				return render_template('sanc.html', anc=anc)
+			try :
+				if int(anc[0])==int(id) :
+					return render_template('sanc.html', anc=anc)
+			except :
+				return redirect(url_for("E404"))
 		return render_template('noanc.html')
 	return redirect(url_for('login'))
 
+@app.errorhandler(404)
+def E404(e):
+    return render_template('404.html'), 404
+
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=port ,debug = True)
+	app.run(host='0.0.0.0', port=port ,debug = True, ssl_context='adhoc')

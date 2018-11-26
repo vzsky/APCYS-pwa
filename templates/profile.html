@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block body %}
-  <h2 class="heading"> {{data['name']}} </h2>
-  <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-id}}" />
+  <h2 class="heading"> {{data['firstn']}} {{data['lastn']}}</h2>
+  <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-qrcode}}" />
   <p><em> {{data['school']}}, {{data['country']}} </em></p>
   <div class="box box_cyan">
-    <p>Faction: <strong>{{data['sciact']}}</strong></p>
-    <p>Excursion: <strong>{{data['xcurs']}}</strong></p>
-    <p>Residence: <strong>{{data['res']}}</strong></p>
+    <p>Sci Act: <strong>Group {{data['sciact']}}</strong></p>
+    <p>Excursion: <strong>Route {{data['xcurs']}}</strong></p>
+    <p>Residence: <strong>{{data['residence']}}</strong></p>
     <P>Buddies:<ul>
   	    {% for bud in data['buddies'] %}
   	    <li>{{bud}}</li>
@@ -19,7 +19,11 @@
     </ul>
   </div>
   <div class="box box_jade">
-    <p>Project: <strong><a href="#">{{data['project']}}</a></strong> <br />
-    Presents at {{data['present']}}</p>
+    <p>
+    	Project: <strong><a href="#">{{data['project']}}</a></strong> <br />
+   		Presents at {{data['room']}}
+   		 <br />
+   		Time : {{data['time']}}
+   	</p>
   </div>
 {% endblock %}
