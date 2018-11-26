@@ -105,22 +105,30 @@ def tkauth():
 @app.route('/api/addanc', methods=['POST'])
 def addanc():
 	try :
-		data = request.json
-		top = data["topic"]
-		con = data["content"]
-		connection = mysql.connect()
-		cursor = connection.cursor()
-		cursor.execute("SELECT MAX(id) from announce")
-		maxid = cursor.fetchone()
-		try : 
-			postid = maxid[0] + 1
-		except : 
-			postid = 0
-		cursor.execute("INSERT INTO announce (id,topic,content) VALUES (%s,%s,%s)",(postid, top, con))
-		connection.commit()
-		status = "POSTed"
-		cursor.close()
-		connection.close()
+		if 'token' in session : 
+			headers = {'token': session['token']}
+			r = requests.post(url=api_tok, headers=headers, verify=False)
+			datare = r.json()
+			if 'error' in datare :
+				return redirect(url_for('login'))
+			userinfo = datare['user']
+			if userinfo['user'] == 'admin' :
+				data = request.json
+				top = data["topic"]
+				con = data["content"]
+				connection = mysql.connect()
+				cursor = connection.cursor()
+				cursor.execute("SELECT MAX(id) from announce")
+				maxid = cursor.fetchone()
+				try : 
+					postid = maxid[0] + 1
+				except : 
+					postid = 0
+				cursor.execute("INSERT INTO announce (id,topic,content) VALUES (%s,%s,%s)",(postid, top, con))
+				connection.commit()
+				status = "POSTed"
+				cursor.close()
+				connection.close()
 	except :
 		status = "error"
 	return status
