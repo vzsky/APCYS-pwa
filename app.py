@@ -42,8 +42,7 @@ def auth(usr,pwd):
 def update(id, table, col, val):
 	connection = mysql.connect()
 	cursor = connection.cursor()
-	print("Run : UPDATE %s SET %s = %s WHERE id = %S;")
-	cursor.execute("UPDATE %s SET %s = %s WHERE id = %S;", (table, col, val, id))
+	cursor.execute(""" UPDATE """+ table +""" SET """ + col + """=%s WHERE id=%s """, (val, id))
 	connection.commit()
 	cursor.close()
 	connection.close()
@@ -199,10 +198,10 @@ def terms(method, id, usr, f, l):
 	if usr=='terms':
 		return render_template('terms.html', name=name)
 	if method == 'POST':
-		update(str(id), "User", "Logged", "1")
+		update(id, 'user', 'logged', '1')
 		n = [x for x in request.form['name'].split(' ')]
-		update(str(id), "User", "first", "'"+n[0]+"'")
-		update(str(id), "User", "last","'"+n[1]+"'")
+		update(id, 'user', 'first', n[0])
+		update(id, 'user', 'last', n[1])
 		return redirect(url_for('index'))
 	return render_template('terms.html', name=name)
 
@@ -255,6 +254,25 @@ def announcement(id):
 				return render_template('404.html'), 404
 		return render_template('noanc.html')
 	return redirect(url_for('login'))
+
+@app.route('/check')
+def check () :
+	cl = []
+	connection = mysql.connect()
+	cursor = connection.cursor()
+	cursor.execute("SELECT * FROM `user` WHERE 1")
+	rows = cursor.fetchall()
+	for row in rows :
+		if (row[-1] == b'\x00') :
+			b = 'bg-danger'
+			cl.append(b)
+		else :
+			b = 'bg-success'
+			cl.append(b)
+	x = [c for c, r in enumerate(rows)]
+	cursor.close()
+	connection.close()
+	return render_template('check.html', rows=rows, cl=cl, x=x)
 
 @app.errorhandler(404)
 def E404(e):
