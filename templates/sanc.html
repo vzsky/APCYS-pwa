@@ -1,16 +1,9 @@
 {% extends "base.html" %}
 
+{% block navleft %}
+       <a href="/main?page=announce">Back</a>
+{% endblock %}
 {% block body %}
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  	<div class="w-25 order-first">
-	  	 <a href="/main?page=announce">Back</a>
-		</div>
-		<div class="w-50 mx-auto container-fluid">
-			<span class="navbar-brand mx-auto">APCYS - KVIS</span>
-		</div>
-		<div class="w-25 order-last">
-		</div>
-	</nav>
 	{{anc[0]}}
 	<br>
 	{{anc[1]}}
