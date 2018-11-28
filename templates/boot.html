@@ -13,8 +13,10 @@
 	<script type="text/javascript">
 		$( document ).ready(function() {
 			$("#welcome").fadeIn(1000).delay(1000).fadeOut(1000);
-			$("#spons").delay(3000).fadeIn(1000).delay(1000).fadeOut(1000);
-			window.location.href = "/login";
+			$("#spons").delay(3100).fadeIn(1000).delay(1000).fadeOut(1000);
+			setTimeout(function(){
+    			window.location.href = "/login";
+			}, 6000);
 		});
 	</script>
 </body>
