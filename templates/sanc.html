@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
+{% block body %}
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  	<div class="w-25 order-first">
-	  	 <a href="/?page=announce">Back</a>
+	  	 <a href="/main?page=announce">Back</a>
 		</div>
 		<div class="w-50 mx-auto container-fluid">
 			<span class="navbar-brand mx-auto">APCYS - KVIS</span>
@@ -10,8 +11,6 @@
 		<div class="w-25 order-last">
 		</div>
 	</nav>
-
-{% block body %}
 	{{anc[0]}}
 	<br>
 	{{anc[1]}}
