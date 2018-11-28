@@ -166,7 +166,7 @@ def login():
 		return redirect(url_for('login'))
 	return render_template("login.html")
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/main', methods=['GET', 'POST'])
 def index ():
 	try :
 		page = request.args.get('page')
@@ -277,6 +277,10 @@ def check () :
 @app.errorhandler(404)
 def E404(e):
     return render_template('404.html'), 404
+
+@app.route('/')
+def boot():
+	return render_template('boot.html')
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=port ,debug = True, ssl_context='adhoc')

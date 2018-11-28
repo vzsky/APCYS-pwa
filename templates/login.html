@@ -2,14 +2,6 @@
 {% block body %}
 <body class='loginbg'>
 
-	<div id='welcome' style='display:none;'>
-		<h1>Welcome</h1>
-	</div>
-
-	<div id='spons' style='display:none;'>
-		<div class='sponsimg'><img src="{{url_for('static', filename='spons.png')}}" class='mx-auto'></div>
-	</div>
-
 	<div id='login'style='display:none;'>
 		<div class='loginlogos'>
 			<img src="{{url_for('static', filename='apcys.png')}}" class='loginlogo mx-auto'>
@@ -24,10 +16,11 @@
 			<input class='formsm' type="submit" name="submit" value="login">	
 		</form>
 	</div>
+	
 	<script type="text/javascript">
-		$("#welcome").fadeIn(1000).delay(1000).fadeOut(1000);
-		$("#spons").delay(3000).fadeIn(1000).delay(1000).fadeOut(1000);
-		$("#login").delay(6000).fadeIn(1000);
+		$( document ).ready(function() {
+			$("#login").fadeIn(1000);
+		});
 	</script>
 </body>
 {% endblock %}

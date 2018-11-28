@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body %}
+<body class='loginbg'>
+
+	<div id='welcome' style='display:none;'>
+		<h1>Welcome</h1>
+	</div>
+
+	<div id='spons' style='display:none;'>
+		<div class='sponsimg'><img src="{{url_for('static', filename='spons.png')}}" class='mx-auto'></div>
+	</div>
+
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			$("#welcome").fadeIn(1000).delay(1000).fadeOut(1000);
+			$("#spons").delay(3000).fadeIn(1000).delay(1000).fadeOut(1000);
+			window.location.href = "/login";
+		});
+	</script>
+</body>
+{% endblock %}
