@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 
-{% block header %}
-	<a class='nav-item nav-link' href="/">Back</a></div>
-{% endblock %}
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  	<div class="w-25 order-first">
+	  	 <a href="/?page=announce">Back</a>
+		</div>
+		<div class="w-50 mx-auto container-fluid">
+			<span class="navbar-brand mx-auto">APCYS - KVIS</span>
+		</div>
+		<div class="w-25 order-last">
+		</div>
+	</nav>
 
 {% block body %}
 	{{anc[0]}}

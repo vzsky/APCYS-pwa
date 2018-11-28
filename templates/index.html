@@ -2,8 +2,20 @@
 {% extends "base.html" %}
 
 {% block body %}
-	<h1> Welcome to test main page.</h1>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  	<div class="w-25 order-first">
+		</div>
+		<div class="w-50 mx-auto container-fluid">
+			<span class="navbar-brand mx-auto">APCYS - KVIS</span>
+		</div>
+		<div class="w-25 order-last">
+		</div>
+	</nav>
+
+		<h1> Welcome to test main page.</h1>
+		<a href="/logout" class='float-right'><button class='btn btn-primary'>Logout</button></a>
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-bottom">
 	  	<div class="w-50 order-first">
 	  		<a class="nav-item nav-link" href="/?page=announce">Announce</a>
 		</div>

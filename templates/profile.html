@@ -3,16 +3,17 @@
 
 {% block body %}
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="w-25 order-first">
-        <a class='nav-item nav-link' href="/">Back</a></div>
+       <a href="/">Back</a>
     </div>
-    <div class="w-50">
-      APCYS
+    <div class="w-50 mx-auto container-fluid">
+      <span class="navbar-brand mx-auto">APCYS - KVIS</span>
     </div>
     <div class="w-25 order-last">
     </div>
   </nav>
+
   <h2 class="heading"> {{data['firstn']}} {{data['lastn']}}</h2>
   <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-qrcode}}" />
   <p><em> {{data['school']}}, {{data['country']}} </em></p>
