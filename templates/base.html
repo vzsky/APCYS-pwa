@@ -7,46 +7,88 @@
 
 	<!-- JQ, JS, JSPopper -->
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
-	<!-- Style.css -->
+	<!-- Style.CSS -->
+	<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 
-	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-	<link rel="manifest"   href="{{ url_for('static', filename='pwamanifest.json') }}" />
+	<style>
+		body { 
+			width: 100%;
+			height: 100vh;
+		}
+		.loginbg {
+			width : 100%;
+			background: linear-gradient(to bottom right, #BFFFE1 7%, #865DF6) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+		.loginlogos {
+			margin : auto;
+			padding-top: 20%;
+			width : 50%;
+		}
+		.loginlogo {
+			padding-bottom: 5%;
+			width : 100%;
+		}
+		.logintext {
+			width : 100%;
+			text-align: center;
+			margin : auto;
+			margin-top : 10%;
+			color : white;
+		}
+		.loginform {
+			width : 60%;
+			margin : auto;
+			margin-top :10%;
+			align-content: center;
+		}
+		.formctrl {
+			width: 100%;
+			margin-top : 10px;
+			border: 2px #ffffff;
+    		border-radius: 10px;
+    		color : white;
+    		padding-left: 10px;
+    		padding-right: 10px;
+    		background-color: rgba(255,255,255,0.3);;
+		}
+		.formsm {
+			position: relative;
+			width : 30%;
+			height : 27px;
+			border: 2px #ffffff;
+    		border-radius: 10px;
+    		background-color: #7084F2;
+    		color : white;
+			padding: 0, 0;
+			margin-top : 5%;
+			margin-left : 35%;
+			margin-right : 35%;
+			margin-bottom: 10%;
+		}
+		.sponsimg img {
+			width:100%;
+		}
+		#spons {
+		  height: 100vh;
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		}
 
-	<script> //Registers a blank SW for PWA-ing
-		if ('serviceWorker' in navigator) {
- 			 navigator.serviceWorker.register('{{ url_for('static', filename='sw.js') }}')
-			  .then(function(registration) {
-			    console.log('Registration successful, scope is:', registration.scope);
-			  })
-			  .catch(function(error) {
-			    console.log('Service worker registration failed, error:', error);
-			  });
-			}
-	</script>
+		.sponsimg {
+		  width: 80%;
+		}
+	</style>
+
 	<title> APCYS x KVIS </title>
 </head>
-<body> 
-
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  	<div class="w-25 order-first">
-	  	 {% block header %}{% endblock %}
-		</div>
-		<div class="w-50 mx-auto container-fluid">
-			<span class="navbar-brand mx-auto">APCYS - KVIS</span>
-		</div>
-		<div class="w-25 order-last">
-  			<a href="/logout" class='float-right'><button class='btn btn-primary'>Logout</button></a>
-		</div>
-	</nav>
-
-	<div class='m-3'>
 		{% block body %}{% endblock %}
-	</div>
-
-</body>
 </html>

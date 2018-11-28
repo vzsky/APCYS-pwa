@@ -3,9 +3,12 @@
 
 {% block body %}
 	<h1> Welcome to test main page.</h1>
-
-<nav class="navbar fixed-bottom navbar-light bg-light navbar-expand-lg">
-<a class="nav-item nav-link" href="/?page=profile">Profile</a>
-<a class="nav-item nav-link" href="/?page=announce">Announce</a>
-</nav>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  	<div class="w-50 order-first">
+	  		<a class="nav-item nav-link" href="/?page=announce">Announce</a>
+		</div>
+		<div class="w-50 order-last">
+  			<a class="nav-item nav-link" href="/?page=profile">Profile</a>
+		</div>
+	</nav>
 {% endblock %}

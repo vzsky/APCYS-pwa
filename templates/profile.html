@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 
-{% block header %}
-  <a class='nav-item nav-link' href="/">Back</a></div>
-{% endblock %}
 
 {% block body %}
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="w-25 order-first">
+        <a class='nav-item nav-link' href="/">Back</a></div>
+    </div>
+    <div class="w-50">
+      APCYS
+    </div>
+    <div class="w-25 order-last">
+    </div>
+  </nav>
   <h2 class="heading"> {{data['firstn']}} {{data['lastn']}}</h2>
   <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-qrcode}}" />
   <p><em> {{data['school']}}, {{data['country']}} </em></p>
@@ -12,11 +20,12 @@
     <p>Sci Act: <strong>Group {{data['sciact']}}</strong></p>
     <p>Excursion: <strong>Route {{data['xcurs']}}</strong></p>
     <p>Residence: <strong>{{data['residence']}}</strong></p>
-    <P>Buddies:<ul>
+    <p>Buddies:<ul>
   	    {% for bud in data['buddies'] %}
   	    <li>{{bud}}</li>
         {% endfor %}
     </ul>
+    </p>
   </div>
   <div class="box box_jade">
     <p>
@@ -26,4 +35,5 @@
    		Time : {{data['time']}}
    	</p>
   </div>
+</body>
 {% endblock %}

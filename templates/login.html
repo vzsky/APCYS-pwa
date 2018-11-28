@@ -1,10 +1,33 @@
 {% extends "base.html" %}
 {% block body %}
-<h1> Login </h1>
-<form method='POST'>
-	<input type="text" name="usr">
-	<input type="password" name="pwd">
-	<input type="submit" name="submit">	
-	{{response}}
-</form>
+<body class='loginbg'>
+
+	<div id='welcome' style='display:none;'>
+		<h1>Welcome</h1>
+	</div>
+
+	<div id='spons' style='display:none;'>
+		<div class='sponsimg'><img src="{{url_for('static', filename='spons.png')}}" class='mx-auto'></div>
+	</div>
+
+	<div id='login'style='display:none;'>
+		<div class='loginlogos'>
+			<img src="{{url_for('static', filename='apcys.png')}}" class='loginlogo mx-auto'>
+			<img src="{{url_for('static', filename='isf.png')}}" class='loginlogo mx-auto'>
+		</div>
+		<div class='logintext' style='display:none;'>
+			<h4>Please Login</h4>
+		</div>
+		<form method='POST' class='loginform'>
+			<input class='formctrl' placeholder="username" type="text" name="usr"><br>
+			<input class='formctrl' placeholder="password" type="password" name="pwd"><br>
+			<input class='formsm' type="submit" name="submit" value="login">	
+		</form>
+	</div>
+	<script type="text/javascript">
+		$("#welcome").fadeIn(1000).delay(1000).fadeOut(1000);
+		$("#spons").delay(3000).fadeIn(1000).delay(1000).fadeOut(1000);
+		$("#login").delay(6000).fadeIn(1000);
+	</script>
+</body>
 {% endblock %}
