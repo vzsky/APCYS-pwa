@@ -11,7 +11,7 @@ mysql = MySQL()
 
 app.config['SECRET_KEY'] = 'secret'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = '1234'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'apcysdb'
 app.config['MYSQL_DATABASE_DB'] = 'APCYS'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
@@ -103,33 +103,38 @@ def tkauth():
 
 @app.route('/api/addanc', methods=['POST'])
 def addanc():
+	status = 'started'
 	try :
-		if 'token' in session : 
-			headers = {'token': session['token']}
-			r = requests.post(url=api_tok, headers=headers, verify=False)
-			datare = r.json()
-			if 'error' in datare :
-				return redirect(url_for('login'))
-			userinfo = datare['user']
-			if userinfo['user'] == 'admin' :
-				data = request.json
-				top = data["topic"]
-				con = data["content"]
-				connection = mysql.connect()
-				cursor = connection.cursor()
-				cursor.execute("SELECT MAX(id) from announce")
-				maxid = cursor.fetchone()
-				try : 
-					postid = maxid[0] + 1
-				except : 
-					postid = 0
-				cursor.execute("INSERT INTO announce (id,topic,content) VALUES (%s,%s,%s)",(postid, top, con))
-				connection.commit()
-				status = "POSTed"
-				cursor.close()
-				connection.close()
+		data = request.json
+		headers = {'token':data['token']}
+		r = requests.post(url=api_tok, headers=headers, verify=False)
+		print('requesting data')
+		datare = r.json()
+		print('requested')
+		if 'error' in datare :
+			return redirect(url_for('login'))
+		userinfo = datare['user']
+		print('userinfo assigned')
+		if userinfo['user'] == 'admin' :
+			print('should be done!')
+			top = data["topic"]
+			con = data["content"]
+			connection = mysql.connect()
+			cursor = connection.cursor()
+			cursor.execute("SELECT MAX(id) from announce")
+			maxid = cursor.fetchone()
+			try : 
+				postid = maxid[0] + 1
+			except : 
+				postid = 0
+			cursor.execute("INSERT INTO announce (id,topic,content) VALUES (%s,%s,%s)",(postid, top, con))
+			connection.commit()
+			status = "POSTed"
+			cursor.close()
+			connection.close()
 	except :
 		status = "error"
+	print(status)
 	return status
 
 #API END HERE #######################################################################################################################
@@ -221,8 +226,10 @@ def admin():
 					print('trying')
 					topic = request.form['topic']
 					content = request.form['content']
-					row_data = {"topic": topic, "content":content}
+					row_data = {"topic": topic, "content":content, "token":session['token']}
+					print('request posting')
 					r = requests.post(url=api_add, json=row_data, verify=False)
+					print('request posting done', r)
 				except : 
 					pass
 				return redirect(url_for('admin'))

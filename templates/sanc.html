@@ -4,9 +4,11 @@
        <a href="/main?page=announce">Back</a>
 {% endblock %}
 {% block body %}
+	{% autoescape false %}
 	{{anc[0]}}
 	<br>
 	{{anc[1]}}
 	<br>
 	{{anc[2]}}
+	{% endautoescape %}
 {% endblock %}
