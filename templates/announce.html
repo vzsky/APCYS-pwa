@@ -1,15 +1,54 @@
 {% extends "base.html" %}
 
 {% block navleft %}
-       <a href="/main">Back</a>
+  <a class='navblock' href="/main"><</a>
 {% endblock %}
 
+{% block navcen %}
+  <p class='navblock'>Announcements</p>
+{% endblock %}
+
+{% block bodyclass %} loginbg {% endblock %}
+
 {% block body %}
-	
-	<h3> announces : </h3>
-	<ul>
-		{% for anc in ancs %}
-			<li><a href='/announcement/{{-anc[0]}}'>{{anc[1]}}</a></li>
-		{% endfor %}
-	</ul>
+        <div id = "nln">
+            <div id = addon>
+                <div id=box>
+                    <a id ="k" href="javascript:dropdown();">open</a>
+                </div>
+             <div id="cover" class="cover"> 
+                    <div id=box2></div>
+                    <table class ="tbls tblsel" >
+                        
+                    {% for anc in ancs %}
+                        <tr>
+                            <td>
+                                <a href="announcement\{{anc[0]}}" target = "main" onclick='dropdown();'>
+                                    <button class='announcebtn'>{{anc[1]}}</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+            <div id="main" class="main">
+                <iframe src="https://www.w3schools.com/css/css_positioning.asp" name ="main"></iframe>
+            </div>
+        </div>
+        <script>
+                
+            function dropdown(){
+                 var dropdownContent = document.getElementById("cover");
+                 if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                    document.getElementById("k").innerHTML="open";
+                 } else {
+                    dropdownContent.style.display = "block";
+                    document.getElementById("k").innerHTML="close";
+                 }
+            }
+                
+        </script> 
 {% endblock %}
