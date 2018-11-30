@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 
-{% block navleft %}
-       <a href="/main?page=announce">Back</a>
-{% endblock %}
+{% block nav %}{% endblock %}
 {% block body %}
-	{% autoescape false %}
-	{{anc[0]}}
-	<br>
-	{{anc[1]}}
-	<br>
-	{{anc[2]}}
-	{% endautoescape %}
+	<div class='m-3 mt-5'>
+		<h1 style='width:100%;'>{{anc[1]}}</h1>
+		<br>
+
+		{% autoescape false %}
+		{{anc[2]}}
+		{% endautoescape %}
+	</div>
 {% endblock %}

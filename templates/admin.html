@@ -1,19 +1,14 @@
 {% extends "base.html" %}
-{% block nav %}{% endblock %}
+{% block navcen %}
+  <p class='navblock'>Admin</p>
+{% endblock %}
+{% block bodyclass %} loginbg {% endblock %}
 {% block body %}
-
-<h1> Welcome to test main page.</h1>
-<h3> announces : </h3>
-{% for anc in ancs %}
-	{{anc}}
-	<br>
-{% endfor %}
-<br>
-
-<h1>Adding announcement</h1>
-	<form method='POST'>
-		<input type="text" name="topic">
-		<textarea name="content"></textarea>
-		<input type="submit">
-	</form>
+     <div> 
+      <form method="POST" class="adminform">
+       <input class="formctrl" placeholder="Topic" type="text"><br>
+       <textarea class ="formtxt" name="message" rows="20" placeholder="Content"></textarea><br>
+       <input class="formsm" type="submit" name="submit" value="submit"> 
+      </form>
+     </div>
 {% endblock %}
