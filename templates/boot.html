@@ -7,7 +7,7 @@
 	</div>
 
 	<div id='spons' style='display:none;'>
-		<div class='sponsimg'><img src="{{url_for('static', filename='spons.png')}}" class='mx-auto'></div>
+		<div class='sponsimg'><div></div></div>
 	</div>
 
 	<script type="text/javascript">
@@ -15,7 +15,7 @@
 			$("#welcome").fadeIn(1000).delay(1000).fadeOut(1000);
 			$("#spons").delay(3100).fadeIn(1000).delay(1000).fadeOut(1000);
 			setTimeout(function(){
-    			window.location.href = "/login";
+    			 window.location.href = "/login";
 			}, 6000);
 		});
 	</script>
