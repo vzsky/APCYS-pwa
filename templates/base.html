@@ -14,6 +14,9 @@
 	<!-- Style.CSS -->
 	<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 
+	<!-- Favicon.ico -->
+	<ink rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
+		
 	<!-- Faye's Include -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -140,6 +143,11 @@
 		.navblock {
 			margin : auto;
 			color : white;
+			text-decoration: none;
+		}
+		.navblock:hover {
+			color :lightgrey;
+			text-decoration: none;
 		}
 		#firstname {
 			color : #aa57e5;
@@ -182,7 +190,7 @@
 		}
 
 	 	/* NINNIN's CSS BELOW THIS POINT */
-	 	 .addon {
+	 	.addon {
             position: static;
         }
         .cover {
@@ -244,7 +252,6 @@
             display: block;
             height: 100%;
             width: 100%;
-            
         }  
         /* FAYE's CSS BELOW THIS POINT */
         .bar {
@@ -284,14 +291,63 @@
 		  .beforebottom {
 		   width: 100%;
 		   padding: 3%;
-		   background-color: tranparent;
+		   background-color: transparent;
 		   position: relative;
 		   bottom: 0;
 		  }
 		  .indextd{
 		  	text-align:center;
 		  	padding: auto;
+		  	width : 50%;
 		  }
+		  .indextd img {
+		  	max-height:7vh;
+		  	width:auto;
+		  }
+		  .bar span {
+		  	float:left;
+		  	font-size:3vh;
+		  }
+		  .featured p {
+		  	font-size:4vw;
+		  	margin-left:1vw
+		  }
+		  .last {
+		  	padding-bottom : 80px;
+		  }
+		  /* TOP's CSS BELOW THIS POINT */
+		  	.text{
+			 	width : 100%;
+				text-align: center;
+			    margin : auto;
+			    padding-top : 10%;
+		      	color : #EFEFFE;
+			}
+			.text h4 {
+			 	font-size : 50px;
+			}
+
+			/* RESPONSIVE DESIGN */
+			@media only screen and (min-width: 700px) {  
+                .cover {
+                    display: block;
+                }
+                .main iframe{
+                    position: absolute;
+                    height: 100%;
+                    width: 80%;
+                    left:20%;
+                }
+                #box{
+                    display:none;
+                }
+                #box2{
+                    display:none;
+                }
+            }
+            @media only screen and (max-width: 450px) {  
+                
+            }
 	</style>
 
 	<title> APCYS x KVIS </title>

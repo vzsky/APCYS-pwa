@@ -14,7 +14,7 @@
         <div id = "nln">
             <div id = addon>
                 <div id=box>
-                    <a id ="k" href="javascript:dropdown();">open</a>
+                    <a id="k" href="javascript:dropdown();">open</a>
                 </div>
              <div id="cover" class="cover"> 
                     <div id=box2></div>
@@ -34,21 +34,27 @@
                 </div>
             </div>
             <div id="main" class="main">
-                <iframe src="https://www.w3schools.com/css/css_positioning.asp" name ="main"></iframe>
+                <iframe name ="main"></iframe>
             </div>
         </div>
         <script>
                 
             function dropdown(){
-                 var dropdownContent = document.getElementById("cover");
-                 if (dropdownContent.style.display === "block") {
-                    dropdownContent.style.display = "none";
-                    document.getElementById("k").innerHTML="open";
-                 } else {
-                    dropdownContent.style.display = "block";
-                    document.getElementById("k").innerHTML="close";
-                 }
-            }
+                    if($('#k').css('display') == 'block')
+                    {
+                     if ($('#cover').css('display') == 'block') {
+                        $("#cover").css("display", "none");
+                        document.getElementById("k").innerHTML="open";
+                     } else {
+                        $("#cover").css("display", "block");
+                        document.getElementById("k").innerHTML="close";
+                     }
+                    }
+                    else
+                    {
+                        $("#cover").css("display", "block");
+                    }
+                }
                 
         </script> 
 {% endblock %}
