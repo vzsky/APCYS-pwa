@@ -107,7 +107,7 @@ def addanc():
 	try :
 		data = request.json
 		headers = {'token':data['token']}
-		r = requests.post(url=api_tok, headers=headers, verify=False)
+		r = requests.post(url=api_tok, headers=headers)
 		print('requesting data')
 		datare = r.json()
 		print('requested')
@@ -143,7 +143,7 @@ def addanc():
 def login():
 	if 'token' in session:
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers, verify=False)
+		r = requests.post(url=api_tok, headers=headers)
 		datare = r.json()
 		if 'error' in datare :
 			return render_template("login.html")
@@ -157,7 +157,7 @@ def login():
 		pwd = request.form['pwd']
 		row_data = {"user": usr,"pass":pwd}
 		print(row_data)
-		r = requests.post(url=api_url, json=row_data, verify=False) # Need to get a cert and enable back verify
+		r = requests.post(url=api_url, json=row_data)
 		print(r)
 		print("request")
 		try :
@@ -180,7 +180,7 @@ def index ():
 		page = 'index.html'
 	if 'token' in session:
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers, verify=False)
+		r = requests.post(url=api_tok, headers=headers)
 		print(r)
 		try :
 			datare = r.json()
@@ -214,7 +214,7 @@ def terms(method, id, usr, f, l):
 def admin():
 	if 'token' in session : 
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers, verify=False)
+		r = requests.post(url=api_tok, headers=headers)
 		datare = r.json()
 		if 'error' in datare :
 			return redirect(url_for('login'))
@@ -228,7 +228,7 @@ def admin():
 					content = request.form['content']
 					row_data = {"topic": topic, "content":content, "token":session['token']}
 					print('request posting')
-					r = requests.post(url=api_add, json=row_data, verify=False)
+					r = requests.post(url=api_add, json=row_data)
 					print('request posting done', r)
 				except : 
 					pass
@@ -245,7 +245,7 @@ def logout():
 def announcement(id):
 	if 'token' in session : 
 		headers = {'token': session['token']}
-		r = requests.post(url=api_tok, headers=headers, verify=False)
+		r = requests.post(url=api_tok, headers=headers)
 		try :
 			datare = r.json()
 		except :
@@ -290,5 +290,4 @@ def boot():
 	return render_template('boot.html')
 
 if __name__ == "__main__":
-	app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon.ico'))
-	app.run(host='0.0.0.0', port=port ,debug = True, ssl_context='adhoc')
+	app.run(host='0.0.0.0', port=port ,debug = True)
