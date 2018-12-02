@@ -45,23 +45,14 @@
   </div>
 
 <div class="bar">
-<span>Program Schedule</span>
+<span>Predeparture Guide</span>
 </div>
 
 <div class="container">
-<div id='programsch' class="owl-carousel owl-theme">
+<div id='content1' class="owl-carousel owl-theme">
     <div class="item">
-  <img src="">
-  </div>
-    <div class="item">
-  <img src="">
-  </div>
-    <div class="item">
-  <img src="">
-  </div>
-    <div class="item">
-  <img src="">
-  </div>
+        <img src="{{url_for('static', filename='content1.pdf'}}">
+    </div>
 </div>
 </div>
 
@@ -70,7 +61,7 @@
 </div>
 
 <div class="container last">
-<div id='excursion' class="owl-carousel owl-theme">
+<div id='content2' class="owl-carousel owl-theme">
     <div class="item">
   <img src="http://110.164.80.12/APCYS/img/20181115-Excursion%20APCYS[Edit]-1.jpg">
   </div>
@@ -81,7 +72,7 @@
 </div>
 
 <script>
-  $('#excursion').owlCarousel({
+  $('#econtent2').owlCarousel({
     loop:true,
     margin:10,
     nav:true,
@@ -94,19 +85,13 @@
         },
     }
   });
-  $('#programsch').owlCarousel({
+  $('#content1').owlCarousel({
     loop:true,
     margin:10,
     nav:true,
     responsive:{
         0:{
             items:1
-        },
-        600:{
-            items:2
-        },
-        1000:{
-            items:4
         },
     }
   })
