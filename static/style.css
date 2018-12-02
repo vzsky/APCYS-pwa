@@ -25,12 +25,13 @@
 			background-size: cover;
 		}
 		#login {
-			height : 100%;
-			margin-top : 10%;
+			height : 100vh;
+			display:flex;
 			text-align: center;
 			justify-content: center;
 		}
 		.loginlogos {
+			padding-top: 20%;
 			margin : auto;
 			width : 50%;
 		}
