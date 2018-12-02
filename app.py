@@ -15,7 +15,7 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'apcysdb'
 app.config['MYSQL_DATABASE_DB'] = 'APCYS'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
-port = 7000
+port = 80
 
 mysql.init_app(app)
 
