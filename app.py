@@ -19,9 +19,9 @@ port = 80
 
 mysql.init_app(app)
 
-api_url = 'https://localhost:'+str(port)+'/api/login'
-api_tok = 'https://localhost:'+str(port)+'/api/token'
-api_add = 'https://localhost:'+str(port)+'/api/addanc'
+api_url = 'http://localhost/api/login'
+api_tok = 'http://localhost/api/token'
+api_add = 'http://localhost/api/addanc'
 
 # END SETTINGS #######################################################################################################
 
@@ -68,7 +68,8 @@ def tkauth():
 		user = send["user"]
 		connection = mysql.connect()
 		cursor = connection.cursor()
-		cursor.execute("SELECT * FROM user WHERE username = %s;", (user))
+		print(user);
+		cursor.execute("SELECT * FROM user WHERE username = %s;", user)
 		data = cursor.fetchone()
 		print("tokenver")
 		#################################################################################
@@ -88,8 +89,9 @@ def tkauth():
 		send["room"] = data[13]
 		send["sciact"] = data[14]
 		send["xcurs"] = data[15]
-		send["buddies"] = [data[x] for x in range(16,19) if data[x] is not None]
-		send["logged"] = data[20]
+		send["buddy"] = data[16]
+		send["logged"] = data[17]
+		send["projectname"] = data[18]
 		#################################################################################
 		cursor.execute("SELECT * FROM announce")
 		anc = cursor.fetchall()
@@ -145,8 +147,9 @@ def login():
 		headers = {'token': session['token']}
 		r = requests.post(url=api_tok, headers=headers)
 		datare = r.json()
+		print(datare)
 		if 'error' in datare :
-			return render_template("login.html")
+			return render_template("login.html",status="Denied : token verification error")
 		userinfo = datare['user']
 		if userinfo['user'] == 'admin' :
 			return redirect(url_for('admin'))
@@ -168,7 +171,8 @@ def login():
 		if datare['status'] == 'accepted':
 			token = datare['token']
 			session['token'] = token
-		return redirect(url_for('login'))
+			return redirect(url_for('login'))
+		return render_template("login.html", status="Denied : wrong username or password")
 	return render_template("login.html")
 
 @app.route('/main', methods=['GET', 'POST'])

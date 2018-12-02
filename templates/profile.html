@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block navleft %}
-  <a class='navblock' href="/main"><</a>
+  <a class='navblock' href="/main"></a>
 {% endblock %}
 
 {% block navcen %}
@@ -17,18 +17,13 @@
       <p>Scientific Activities<br>:<strong>Group {{data['sciact']}}</strong></p>
       <p>Excursion<br>:<strong>Route {{data['xcurs']}}</strong></p>
       <p>Residence<br>:<strong>{{data['residence']}}</strong></p>
-      <p>Buddies:</p>
-      <ul>
-    	  {% for bud in data['buddies'] %}
-    	  <li>{{bud}}</li>
-        {% endfor %}
-      </ul>
+      <p>Buddy<br>:<strong>{{data['buddy']}}</strong></p>
     </div>
     <div class='mx-4'>
       <p>
-      	Project: <strong><a href="#">{{data['project']}}</a></strong> <br />
+      	Project <strong>{{data['project']}} :</strong> {{data['projectname']}} <br>
      		Presents at {{data['room']}}
-     		 <br />
+     		 <br>
      		Scheduled time : {{data['time']}}
      	</p>
     </div>
