@@ -8,53 +8,74 @@
   <p class='navblock'>Announcements</p>
 {% endblock %}
 
-{% block bodyclass %} loginbg {% endblock %}
+{% block bodyclass %} loginbg announcebg {% endblock %}
 
 {% block body %}
-        <div id = "nln">
-            <div id = addon>
-                <div id=box>
-                    <a id="k" href="javascript:dropdown();">open</a>
-                </div>
-             <div id="cover" class="cover"> 
-                    <div id=box2></div>
-                    <table class ="tbls tblsel" >
+        <nav class="navbar navbar-expand-lg navbar-head">
+              <div class="navele w-25 order-first">
+                   
+      <a class="navblock" href="/main">&lt;</a>
+    
+            </div>
+            <div class="navele w-50 mx-auto container-fluid">
+                  
+      <p class="navblock">Announcements</p>
+    
+            </div>
+            <div class="navele w-25 order-last">
+                
+            </div>
+          </nav>
+        
+    
+        
+            <div id="nln">
+                <div id="addon">
+                    <div id="box">
+                        <a id="k" href="javascript:dropdown();">open</a>
+                    </div>
+                 <div id="cover" class="cover" > 
+                        <div id="box2"></div>
+                        <table class="tbls tblsel">
+                            
                         
-                    {% for anc in ancs %}
-                        <tr>
-                            <td>
-                                <a href="announcement\{{anc[0]}}" target = "main" onclick='dropdown();'>
-                                    <button class='announcebtn'>{{anc[1]}}</button>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                         <tbody>
+                            {% for anc in ancs %}
+                            <tr>
+                                <td>
+                                    <a href="announcement/{{anc[0]}}" target="main" onclick="dropdown();">
+                                        <button class="announcebtn">{{anc[1]}}</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
 
                     </table>
+                    </div>
+                </div>
+                <div id="main" class="main">
+                    <iframe name="main"></iframe>
                 </div>
             </div>
-            <div id="main" class="main">
-                <iframe name ="main"></iframe>
-            </div>
-        </div>
-        <script>
-                
-            function dropdown(){
-                    if($('#k').css('display') == 'block')
+            <script>
+                    
+                function dropdown(){
+                    var w = window.innerWidth|| document.documentElement.clientWidth|| document.body.clientWidth;
+                    var h = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
+                    if(w/h<=501/744)
                     {
-                     if ($('#cover').css('display') == 'block') {
-                        $("#cover").css("display", "none");
+                     var dropdownContent = document.getElementById("cover");
+                     if (dropdownContent.style.display == "block") {
+                        dropdownContent.style.display = "none";
                         document.getElementById("k").innerHTML="open";
                      } else {
-                        $("#cover").css("display", "block");
+                        dropdownContent.style.display = "block";
                         document.getElementById("k").innerHTML="close";
                      }
                     }
-                    else
-                    {
-                        $("#cover").css("display", "block");
-                    }
                 }
-                
-        </script> 
+                    
+            </script> 
 {% endblock %}
+
