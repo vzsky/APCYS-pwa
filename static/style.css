@@ -177,6 +177,9 @@
 		.bottombar table, .bottombar tr, .bottombar td {
 			border : none;
 		}
+		.content img {
+			width : 100%;
+		}
 
 	 	/* NINNIN's CSS BELOW THIS POINT */
 	 	.addon {
