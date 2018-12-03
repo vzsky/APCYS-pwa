@@ -98,16 +98,36 @@
 </script>
 
 <div class="bottombar">
+
+  <style>
+    @media all and (max-width:25em) {
+      .bottombar .bottombar_text {
+        display: none !important;
+      }
+    }
+
+    .bottombar .bottombar_text {
+
+      font-size: 1.2em;
+      padding-left: 0.5em;
+      display: inline;
+      color: white;
+
+    }
+  </style>
+
   <table>
     <tr>
       <td class='indextd'>  
         <a href="/main?page=announce" align='center'>
           <img src="{{url_for('static', filename='announce.png')}}" alt="Announce">
+          <h6 class="bottombar_text">Announcement</h6>
         </a>
       </td>
       <td class='indextd'>
         <a href="/main?page=profile">
           <img src="{{url_for('static', filename='profile.png')}}" alt="Profile">
+          <h6 class="bottombar_text">Profile</h6>
         </a>
       </td>
     </tr>
