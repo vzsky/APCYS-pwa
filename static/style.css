@@ -122,7 +122,7 @@
 		.navbar-head {
 			background: linear-gradient(to right, #9AD4FF 25%, #8854EA) no-repeat center center fixed; 
 		}
-		.navele {
+		.navele, .navblock img {
 			height : 100%;
 		}
 		.head-nav-logo {
@@ -189,6 +189,7 @@
                height: 100%;
           }
         .cover {
+<<<<<<< HEAD
                 display: none;
                 position: absolute;
                 width: 20%;
@@ -250,6 +251,68 @@
                 width: 100%;
                 
             }
+=======
+            display: none;
+            position: absolute;
+            width: 20%;
+            height: 100%;
+            min-width: 100px;
+            background-color: rgba(204, 234, 255 ,1.0);
+            color : #725189;
+            z-index: 1;
+        }
+        .cover table {
+            border-collapse: collapse;
+            min-width: 80;
+            width: 100%;
+        }
+        .cover th,table,td {
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .cover th{
+            margin-bottom: .5rem;
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.2;
+            color: inherit;
+        }
+        .cover a{
+            text-decoration: none;
+            color: #66b8b4af
+        }
+        .cover tr:hover{
+            background-color: #f5f5f5;
+        }
+        .main iframe{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+        #box{
+            position: absolute;
+            height:30px;
+            width: 20%;
+            min-width: 100px;
+            background-color: rgba(187, 168, 249);
+            z-index: 2;
+        }
+        #box2{
+            height:30px;
+            width: 20%;
+            min-width: 100px;
+            z-index: 2;
+        }
+        #k{
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            height: 100%;
+            width: 100%;
+        }  
+>>>>>>> df7c5c36bbd44610e95f4430b4e744470eeea26a
         /* FAYE's CSS BELOW THIS POINT */
         .bar {
 		   width: 100%;
