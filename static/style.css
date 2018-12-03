@@ -123,7 +123,7 @@
 		.navbar-head {
 			background: linear-gradient(to right, #9AD4FF 25%, #8854EA) no-repeat center center fixed; 
 		}
-		.navele {
+		.navele, .navblock img {
 			height : 100%;
 		}
 		.head-nav-logo {
@@ -191,7 +191,8 @@
             width: 20%;
             height: 100%;
             min-width: 100px;
-            background-color: rgba(165, 165, 165, 0.678);
+            background-color: rgba(204, 234, 255 ,1.0);
+            color : #725189;
             z-index: 1;
         }
         .cover table {
@@ -227,7 +228,7 @@
             height:30px;
             width: 20%;
             min-width: 100px;
-            background: rgba(200, 200, 200, 0.719);
+            background-color: rgba(187, 168, 249);
             z-index: 2;
         }
         #box2{
