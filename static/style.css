@@ -197,6 +197,7 @@ body {
             min-width: 100px;
             background-color: rgba(204, 234, 255 ,1.0);
             color : #725189;
+            overflow-y : auto;
             z-index: 1;
         }
         .cover table {
