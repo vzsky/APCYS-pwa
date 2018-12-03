@@ -25,6 +25,10 @@ api_add = 'http://localhost/api/addanc'
 
 # END SETTINGS #######################################################################################################
 
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
 # API HERE ###########################################################################################################
 
 def auth(usr,pwd):
