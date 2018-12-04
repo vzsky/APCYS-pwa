@@ -72,7 +72,6 @@ def tkauth():
 		user = send["user"]
 		connection = mysql.connect()
 		cursor = connection.cursor()
-		print(user);
 		cursor.execute("SELECT * FROM user WHERE username = %s;", user)
 		data = cursor.fetchone()
 		print("tokenver")
@@ -100,10 +99,8 @@ def tkauth():
 		#################################################################################
 		cursor.execute("SELECT * FROM announce")
 		anc = cursor.fetchall()
-		print(anc)
 		cursor.close()
 		connection.close()
-		print("closed")
 	except:
 		return jsonify({"error":"authen error"})
 	return jsonify({"user":send,"announce":anc})
@@ -115,9 +112,7 @@ def addanc():
 		data = request.json
 		headers = {'token':data['token']}
 		r = requests.post(url=api_tok, headers=headers)
-		print('requesting data')
 		datare = r.json()
-		print('requested')
 		if 'error' in datare :
 			return redirect(url_for('login'))
 		userinfo = datare['user']
@@ -164,15 +159,11 @@ def login():
 		usr = request.form['usr']
 		pwd = request.form['pwd']
 		row_data = {"user": usr,"pass":pwd}
-		print(row_data)
 		r = requests.post(url=api_url, json=row_data)
-		print(r)
-		print("request")
 		try :
 			datare = r.json()
 		except :
 			return "<h1> Mysql is closed </h1>"
-		print(datare)
 		if datare['status'] == 'accepted':
 			token = datare['token']
 			session['token'] = token
@@ -236,9 +227,7 @@ def admin():
 					topic = request.form['topic']
 					content = request.form['content']
 					row_data = {"topic": topic, "content":content, "token":session['token']}
-					print('request posting')
 					r = requests.post(url=api_add, json=row_data)
-					print('request posting done', r)
 				except : 
 					pass
 				return redirect(url_for('admin'))
