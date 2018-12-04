@@ -8,41 +8,26 @@
 {% endblock %}
 
 {% block body %}
+
 <div class="container">
-  <div id="demo" class="carousel slide" data-ride="carousel">
-    <ul class="carousel-indicators">
-      <li data-target="#demo" data-slide-to="0" class="active"></li>
-      <li data-target="#demo" data-slide-to="1"></li>
-      <li data-target="#demo" data-slide-to="2"></li>
-      <li data-target="#demo" data-slide-to="3"></li>
-    </ul>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
+<div id='content0' class="owl-carousel owl-theme">
+   	<div class="item">
         <img src="{{url_for('static', filename='Featured/1.jpg')}}" alt="..." >
       </div>
-      <div class="carousel-item">
+      <div class="item">
         <img src="{{url_for('static', filename='Featured/2.jpg')}}" alt="...">
       </div>
-      <div class="carousel-item">
+      <div class="item">
         <img src="{{url_for('static', filename='Featured/3.jpg')}}" alt="...">
       </div>
-      <div class="carousel-item">
+      <div class="item">
         <img src="{{url_for('static', filename='Featured/4.jpg')}}" alt="...">
       </div>
-    </div>
-
-    <a class="carousel-control-prev" href="#demo" data-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </a>
-    <a class="carousel-control-next" href="#demo" data-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </a>
-  </div>
-
+</div>
     <div class="featured">
     <p>Featured</p>
     </div>
-  </div>
+</div>
 
 <div class="bar">
 <span>Predeparture Guide</span>
@@ -60,7 +45,7 @@
 <span>Excursions</span>
 </div>
 
-<div class="container last">
+<div class="container">
 <div id='content2' class="owl-carousel owl-theme">
     <div class="item">
   <img src="http://110.164.80.12/APCYS/img/20181115-Excursion%20APCYS[Edit]-1.jpg">
@@ -71,7 +56,87 @@
 </div>
 </div>
 
+<div class="bar">
+<span>Poster presentation schedules</span>
+</div>
+
+<div class="container">
+<div id='content3' class="owl-carousel owl-theme">
+    <div class="item">
+  <img src="{{url_for('static', filename='Main/Poster Presentation Schedule-1.jpg')}}">
+  </div>
+    <div class="item">
+  <img src="{{url_for('static', filename='Main/Poster Presentation Schedule-2.jpg')}}">
+  </div>
+    <div class="item">
+  <img src="{{url_for('static', filename='Main/Poster Presentation Schedule-3.jpg')}}">
+  </div>
+    <div class="item">
+  <img src="{{url_for('static', filename='Main/Poster Presentation Schedule-4.jpg')}}">
+  </div>
+    <div class="item">
+  <img src="{{url_for('static', filename='Main/Poster Presentation Schedule-5.jpg')}}">
+  </div>
+    <div class="item">
+  <img src="{{url_for('static', filename='Main/Poster Presentation Schedule-6.jpg')}}">
+  </div>
+</div>
+</div>
+
+<div class="bar">
+<span>Oral presentation schedules</span>
+</div>
+
+<div class="container last">
+<div id='content4' class="owl-carousel owl-theme">
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-1.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-2.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-3.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-4.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-5.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-6.jpg">
+  </div>
+</div>
+</div>
+
 <script>
+  $('#content0').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        }
+    }
+  });
+  $('#content1').owlCarousel({
+    loop:false,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+    }
+  });
   $('#content2').owlCarousel({
     loop:true,
     margin:10,
@@ -85,16 +150,44 @@
         },
     }
   });
-  $('#content1').owlCarousel({
-    loop:false,
+  $('#content3').owlCarousel({
+    loop:true,
     margin:10,
     nav:true,
     responsive:{
         0:{
             items:1
         },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        },
+        1200:{
+            items:5
+        }
     }
-  })
+  });
+  $('#content4').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        },
+        1200:{
+            items:5
+        }
+    }
+  });
 </script>
 
 <div class="bottombar">

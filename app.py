@@ -9,7 +9,7 @@ mysql = MySQL()
 
 # Settings ###########################################################################################################
 
-app.config['SECRET_KEY'] = 'secret'
+app.config['SECRET_KEY'] = 'T4Is^f*H3VU$SdGRjgRWu$GiH#*G'
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'apcysdb'
 app.config['MYSQL_DATABASE_DB'] = 'APCYS'
