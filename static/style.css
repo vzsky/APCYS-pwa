@@ -1,6 +1,9 @@
-body {
+		body {
 			width: 100%;
 			height: 100vh
+		}
+		.singleann {
+			background-color: rgba(204, 234, 255 ,0.7);
 		}
 		.adminform {
            width : 80%;

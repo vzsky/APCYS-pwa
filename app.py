@@ -96,6 +96,7 @@ def tkauth():
 		send["buddy"] = data[16]
 		send["logged"] = data[17]
 		send["projectname"] = data[18]
+		send["status"] = data[19]
 		#################################################################################
 		cursor.execute("SELECT * FROM announce")
 		anc = cursor.fetchall()
@@ -244,6 +245,16 @@ def admin():
 			return render_template('admin.html', data=datare['user'], ancs = datare['announce'])
 	return redirect(url_for('login'))
 
+@app.route('/delanc/<id>')
+def delanc(id):
+	connection = mysql.connect()
+	cursor = connection.cursor()
+	cursor.execute("DELETE FROM `announce` WHERE id=%s",id)
+	connection.commit()
+	cursor.close()
+	connection.close()
+	return redirect(url_for('admin'))
+
 @app.route('/logout')
 def logout():
 	session.pop('token', None)
@@ -278,7 +289,7 @@ def check () :
 	cursor.execute("SELECT * FROM `user` WHERE 1")
 	rows = cursor.fetchall()
 	for row in rows :
-		if (row[-1] == b'\x00') :
+		if (row[19] == 0) :
 			b = 'bg-danger'
 			cl.append(b)
 		else :
@@ -298,4 +309,4 @@ def boot():
 	return render_template('boot.html')
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=port ,debug = False)
+	app.run(host='0.0.0.0', port=port ,debug = True)

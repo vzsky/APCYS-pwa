@@ -5,9 +5,17 @@
 {% block bodyclass %} loginbg {% endblock %}
 {% block body %}
      <div> 
+     	
+     	<button class="table-success" style="margin:0 10%;margin-top:3%;width:80%;border-radius:10px;border:none;" onclick='$("#delancbtn").toggle();'>toggle</button>
+     	<div id='delancbtn' style="display:none;">
+     	{% for anc in ancs %}
+     	<button class="table-danger" style="margin:0 10%;width:80%;border-radius:10px;border:none;"><a href='/delanc/{{anc[0]}}'>{{anc[1]}}</a></button>
+     	{% endfor %}
+     	</div>
+     
       <form method="POST" class="adminform">
-       <input class="formctrl" placeholder="Topic" type="text"><br>
-       <textarea class ="formtxt" name="message" rows="20" placeholder="Content"></textarea><br>
+       <input class="formctrl" name='topic' placeholder="Topic" type="text"><br>
+       <textarea class ="formtxt" name="content" rows="20" placeholder="Content"></textarea><br>
        <input class="formsm" type="submit" name="submit" value="submit"> 
       </form>
      </div>

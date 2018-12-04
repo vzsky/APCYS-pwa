@@ -10,10 +10,12 @@
 
 {% block body %}
   <div class='m-3'>
+       <center><img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-data['qrcode']}}" /></center>
     <h1 id='firstname'> {{data['firstn']}}</h1>
     <h2 id='lastname'> {{data['lastn']}}</h2>
     <div class='mx-4'>
       <p><em> {{data['school']}}, {{data['country']}} </em></p>
+      <p>Status : <strong>{% if data['status'] %} Checked in {% else %} Did not check in {% endif %}</strong></p>
       <p>Scientific Activities<br>:<strong>Group {{data['sciact']}}</strong></p>
       <p>Excursion<br>:<strong>Route {{data['xcurs']}}</strong></p>
       <p>Residence<br>:<strong>{{data['residence']}}</strong></p>
@@ -27,6 +29,5 @@
      		Scheduled time : {{data['time']}}
      	</p>
     </div>
-   <center><img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-data['qrcode']}}" /></center>
  </div>
 {% endblock %}
