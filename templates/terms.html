@@ -10,14 +10,15 @@
 	 	I hereby give the organizing committee my consent to publish any photos of me for any purpose and in any form.
 	  </p>
 	  <div class='bottom'>
-		  <form method='POST' class='loginform'>
-			<input class='formctrl' type="text" name='name' placeholder="{{name}}" value='{{name}}'>
-		  	<input class='formsm' type="submit" value="accept">
-		  </form>
-		  <p class='termstext'>
+	  	  <p class='termstext'>
 		  	check and correct your name<br>
 		  	This can only be done once
 		  </p>
+		  <form method='POST' class='loginform'>
+			<input class='formctrl' type="text" name='first' placeholder="{{first}}" value='{{first}}'>
+			<input class='formctrl' type="text" name='last' placeholder="{{last}}" value='{{last}}'>
+		  	<input class='formsm' type="submit" value="accept">
+		  </form>
 	</div>
 	</div>
 {% endblock %}

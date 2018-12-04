@@ -208,16 +208,16 @@ def index ():
 	return redirect(url_for('login'))
 
 def terms(method, id, usr, f, l):
-	name = f + " " + l
 	if usr=='terms':
-		return render_template('terms.html', name=name)
+		return render_template('terms.html', first=f, last=l)
 	if method == 'POST':
 		update(id, 'user', 'logged', '1')
-		n = [x for x in request.form['name'].split(' ')]
-		update(id, 'user', 'first', n[0])
-		update(id, 'user', 'last', n[1])
+		fi = request.form['first']
+		li = request.form['last']
+		update(id, 'user', 'first', fi)
+		update(id, 'user', 'last', li)
 		return redirect(url_for('index'))
-	return render_template('terms.html', name=name)
+	return render_template('terms.html', first=f, last=l)
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
