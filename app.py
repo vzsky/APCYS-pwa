@@ -278,7 +278,7 @@ def check () :
 	cursor.execute("SELECT * FROM `user` WHERE 1")
 	rows = cursor.fetchall()
 	for row in rows :
-		if (row[19] == 0) :
+		if (row[19] == 2) :
 			b = 'bg-danger'
 			cl.append(b)
 		else :
