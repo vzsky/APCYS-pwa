@@ -195,7 +195,7 @@ def index ():
 		print(userinfo['id'], userinfo['user'])
 		if userinfo['logged'] == "0":
 			return terms(request.method, userinfo['id'], userinfo['user'], userinfo['firstn'], userinfo['lastn'])
-		return render_template(page, data=datare['user'], ancs = datare['announce'])
+		return render_template(page, data=datare['user'], ancs = datare['announce'][::-1])
 	return redirect(url_for('login'))
 
 def terms(method, id, usr, f, l):
