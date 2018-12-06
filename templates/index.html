@@ -54,6 +54,30 @@
 </div>
 
 <div class="bar">
+<span>Daily Newsletter <a href='web.apcys.host'> See More... </a></span>
+</div>
+
+<div class="container">
+<div id='news' class="owl-carousel owl-theme">
+    <div class="item">
+        <img src="{{url_for('static', filename='news/1.jpg')}}">
+    </div>
+    <div class="item">
+        <img src="{{url_for('static', filename='news/2.jpg')}}">
+    </div>
+    <div class="item">
+        <img src="{{url_for('static', filename='news/3.jpg')}}">
+    </div>
+    <div class="item">
+        <img src="{{url_for('static', filename='news/4.jpg')}}">
+    </div>
+  <div class="item">
+        <img src="{{url_for('static', filename='news/5.jpg')}}">
+    </div>
+</div>
+</div>
+
+<div class="bar">
 <span>Excursions</span>
 </div>
 
@@ -124,6 +148,22 @@
 
 <script>
   $('#content0').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        }
+    }
+  });
+  $('#news').owlCarousel({
     loop:true,
     margin:10,
     nav:true,
