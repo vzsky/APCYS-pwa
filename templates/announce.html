@@ -1,14 +1,68 @@
 {% extends "base.html" %}
 
-{% block header %}
-	<a class='nav-item nav-link' href="/">Back</a></div>
+{% block navleft %}
+  <a class='navblock' href="/main"><img src="{{url_for('static', filename='back.png')}}"></a>
 {% endblock %}
 
-{% block body %}
-	<h3> announces : </h3>
-	<ul>
-		{% for anc in ancs %}
-			<li><a href='/announcement/{{-anc[0]}}'>{{anc[1]}}</a></li>
-		{% endfor %}
-	</ul>
+{% block navcen %}
+  <p class='navblock'>Announcements</p>
 {% endblock %}
+
+{% block bodyclass %} loginbg announcebg {% endblock %}
+
+{% block body %}
+        
+            <div id="nln">
+                <div id="addon">
+                    <div id="box">
+                        <a id="k" href="javascript:dropdown();">open</a>
+                    </div>
+                 <div id="cover" class="cover" > 
+                        <div id="box2"></div>
+                        <table class="tbls tblsel">
+                            
+                        
+                         <tbody>
+                         	<tr>
+                         		<td>
+                         			<a href='https://goo.gl/forms/1BmujRVWWgxBXgxh1'>
+                         				<button class='announcebtn bg-warning'>Application Feedback</button>
+                            {% for anc in ancs %}
+                            <tr>
+                                <td>
+                                    <a href="announcement/{{anc[0]}}" target="main" onclick="dropdown();">
+                                        <button class="announcebtn">{{anc[1]}}</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                    </div>
+                </div>
+                <div id="main" class="main">
+                    <iframe name="main"></iframe>
+                </div>
+            </div>
+            <script>
+                    
+                function dropdown(){
+                    var w = window.innerWidth|| document.documentElement.clientWidth|| document.body.clientWidth;
+                    var h = window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight;
+                    if(w/h<=701/744)
+                    {
+                     var dropdownContent = document.getElementById("cover");
+                     if (dropdownContent.style.display == "block") {
+                        dropdownContent.style.display = "none";
+                        document.getElementById("k").innerHTML="open";
+                     } else {
+                        dropdownContent.style.display = "block";
+                        document.getElementById("k").innerHTML="close";
+                     }
+                    }
+                }
+                    
+            </script> 
+{% endblock %}
+

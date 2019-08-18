@@ -1,11 +1,244 @@
-
 {% extends "base.html" %}
 
-{% block body %}
-	<h1> Welcome to test main page.</h1>
+{% block navleft %}
+  <img src="{{url_for('static', filename='isf.png')}}" align='left' class='head-nav-logo'>
+{% endblock %}
+{% block navright %}
+  <img src="{{url_for('static', filename='apcys.png')}}" align='right' class='head-nav-logo'>
+{% endblock %}
 
-<nav class="navbar fixed-bottom navbar-light bg-light navbar-expand-lg">
-<a class="nav-item nav-link" href="/?page=profile">Profile</a>
-<a class="nav-item nav-link" href="/?page=announce">Announce</a>
-</nav>
+{% block body %}
+
+<div class="container" style='padding-top: 15px;padding-bottom: 15px;'>
+<div'>
+   	<a href='https://goo.gl/forms/1BmujRVWWgxBXgxh1'><button class='btn btn-warning' style='width:100%;'>Application Feedback!<br>We need your opinions<br><br>Click to help us!</button></a>
+</div>
+</div>
+
+<div class="bar">
+<span>Gallery</span><a class='cmore' href='http://web.apcys.host/APCYS/index1.html'> See More... </a>
+</div>
+
+<div class="container">
+<div id='content1' class="owl-carousel owl-theme">
+    <div class="item">
+        <img src="{{url_for('static', filename='D0/D0-1.jpg')}}">
+    </div>
+    <div class="item">
+        <img src="{{url_for('static', filename='D0/D0-2.jpg')}}">
+    </div>
+    <div class="item">
+        <img src="{{url_for('static', filename='D0/D0-3.jpg')}}">
+    </div>
+    <div class="item">
+        <img src="{{url_for('static', filename='D0/D0-4.jpg')}}">
+    </div>
+	<div class="item">
+        <img src="{{url_for('static', filename='D0/D0-5.jpg')}}">
+    </div>
+</div>
+</div>
+
+<div class="bar">
+<span>Daily Newsletter</span> <a class='cmore' href='http://web.apcys.host/APCYS/Newsletter.php'> See More... </a>
+</div>
+
+<div class="container">
+<div id='news' class="owl-carousel owl-theme">
+    <div class="item">
+        <img src="{{url_for('static', filename='news2/1.jpg')}}">
+    </div>
+    <div class="item">
+        <img src="{{url_for('static', filename='news2/2.jpg')}}">
+    </div>
+    <div class="item">
+        <img src="{{url_for('static', filename='news2/3.jpg')}}">
+    </div>
+    <div class="item">
+        <img src="{{url_for('static', filename='news2/4.jpg')}}">
+    </div>
+</div>
+</div>
+
+<div class="bar">
+<span>Excursions</span>
+</div>
+
+<div class="container">
+<div id='content2' class="owl-carousel owl-theme">
+    <div class="item">
+  <img src="http://110.164.80.12/APCYS/img/20181115-Excursion%20APCYS[Edit]-1.jpg">
+  </div>
+    <div class="item">
+  <img src="http://110.164.80.12/APCYS/img/20181115-Excursion%20APCYS[Edit]-2.jpg">
+  </div>
+</div>
+</div>
+
+<div class="bar">
+<span>Oral presentation schedules</span>
+</div>
+
+<div class="container last">
+<div id='content4' class="owl-carousel owl-theme">
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-1.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-2.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-3.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-4.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-5.jpg">
+  </div>
+    <div class="item">
+  <img src="/static/Main/Oral Presentation Schedule Final-6.jpg">
+  </div>
+</div>
+</div>
+
+<script>
+  $('#content0').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        }
+    }
+  });
+  $('#news').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        }
+    }
+  });
+  $('#content1').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        },
+    }
+  });
+  $('#content2').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+    }
+  });
+  $('#content3').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        },
+        1200:{
+            items:5
+        }
+    }
+  });
+  $('#content4').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:2
+        },
+        1000:{
+            items:4
+        },
+        1200:{
+            items:5
+        }
+    }
+  });
+</script>
+
+<div class="bottombar">
+
+  <style>
+    @media all and (max-width:25em) {
+      .bottombar .bottombar_text {
+        display: none !important;
+      }
+    }
+
+    .bottombar .bottombar_text {
+
+      font-size: 1.2em;
+      padding-left: 0.5em;
+      display: inline;
+      color: white;
+
+    }
+  </style>
+
+  <table>
+    <tr>
+      <td class='indextd'>  
+        <a href="/main?page=announce" align='center'>
+          <img src="{{url_for('static', filename='announce.png')}}" alt="Announce">
+          <h6 class="bottombar_text">Announcement</h6>
+        </a>
+      </td>
+      <td class='indextd'>
+        <a href="/main?page=profile">
+          <img src="{{url_for('static', filename='profile.png')}}" alt="Profile">
+          <h6 class="bottombar_text">Profile</h6>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
+
 {% endblock %}

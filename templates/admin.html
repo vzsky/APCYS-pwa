@@ -1,33 +1,22 @@
 {% extends "base.html" %}
+{% block navcen %}
+  <p class='navblock'>Admin</p>
+{% endblock %}
+{% block bodyclass %} loginbg {% endblock %}
 {% block body %}
-
-<h1> Welcome to test main page.</h1>
-<h3> announces : </h3>
-{% for anc in ancs %}
-	{{anc}}
-	<br>
-{% endfor %}
-<br>
-<h4> Name : {{name}} </h4>
-  <h4> // id : {{id}} </h4>
-  <h4> school : {{school}} </h4>
-  <h4> country : {{country}} // iconic symb.</h4>
-  <h4> project : {{project}} </h4>
-  <h4> res : {{res}} </h4>
-  <h4> present : {{present}} </h4>
-  <h4> sciact : {{sciact}} </h4>
-  <h4> Buddies </h4>
-  <ul> 
-  	{% for bud in buddies %}
-  	<li>{{bud}}</li>
-  	{% endfor %}
-  </ul>
-<br><br><br>
-
-<h1>Adding announcement</h1>
-	<form method='POST'>
-		<input type="text" name="topic">
-		<textarea name="content"></textarea>
-		<input type="submit">
-	</form>
+     <div> 
+     	
+     	<button class="table-success" style="margin:0 10%;margin-top:3%;width:80%;border-radius:10px;border:none;" onclick='$("#delancbtn").toggle();'>toggle</button>
+     	<div id='delancbtn' style="display:none;">
+     	{% for anc in ancs %}
+     	<button class="table-danger" style="margin:0 10%;width:80%;border-radius:10px;border:none;"><a href='/delanc/{{anc[0]}}'>{{anc[1]}}</a></button>
+     	{% endfor %}
+     	</div>
+     
+      <form method="POST" class="adminform">
+       <input class="formctrl" name='topic' placeholder="Topic" type="text"><br>
+       <textarea class ="formtxt" name="content" rows="20" placeholder="Content"></textarea><br>
+       <input class="formsm" type="submit" name="submit" value="submit"> 
+      </form>
+     </div>
 {% endblock %}

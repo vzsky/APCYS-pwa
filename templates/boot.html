@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block nav %}{% endblock %}
+{% block bodyclass %}loginbg{% endblock %}
+{% block body %}
+	<div id='welcome' style='display:none;'>
+		<h1 class='text-center'>Welcome</h1>
+	</div>
+
+	<div id='spons' style='display:none;'>
+		<div class='sponsimg'><div></div></div>
+	</div>
+
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			$("#welcome").fadeIn(1000).delay(1000).fadeOut(1000);
+			$("#spons").delay(3100).fadeIn(1000).delay(1000).fadeOut(1000);
+			setTimeout(function(){
+    			 window.location.href = "/login";
+			}, 6000);
+		});
+	</script>
+{% endblock %}

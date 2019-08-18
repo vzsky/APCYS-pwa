@@ -1,17 +1,24 @@
 {% extends "base.html" %}
 
-{% block header %}
-
-{% endblock %}
+{% block nav %}{% endblock %}
+{% block bodyclass %}loginbg{% endblock %}
 
 {% block body %}
-  <h1> Terms go here</h1>
- <p>
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima dolores ad praesentium vero porro sed, eveniet dolorem animi id voluptatum iusto obcaecati, eaque unde consectetur. Dolore quod eligendi earum numquam.
-  </p>
-  <h1> You can edit your name *** only once!!! *** </h1>
-  <form method='POST'>
-	name : <input type="text" name='name' placeholder="{{name}}" value='{{name}}'>
-  	<input type="submit" value="accept">
-  </form>
+	<div class='m-3'>
+	  <h1 class='fullheading'> Terms and Conditions </h1>
+	  <p class='termstext'>
+	 	I hereby give the organizing committee my consent to publish any photos of me for any purpose and in any form.
+	  </p>
+	  <div class='bottom'>
+	  	  <p class='termstext'>
+		  	check and correct your name<br>
+		  	This can only be done once
+		  </p>
+		  <form method='POST' class='loginform'>
+			<input class='formctrl' type="text" name='first' placeholder="{{first}}" value='{{first}}'>
+			<input class='formctrl' type="text" name='last' placeholder="{{last}}" value='{{last}}'>
+		  	<input class='formsm' type="submit" value="accept">
+		  </form>
+	</div>
+	</div>
 {% endblock %}

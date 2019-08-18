@@ -1,22 +1,359 @@
-.grayhound {
-	background-color: #CCC;
-}
-body {
-	font-family: Ubuntu, Futura, sans-serif;
-}
-.box {
-	color: #000;
-	margin-top: 8px;
-    padding: 8px;
-}
-.box_cyan {
-	background-color: #cdf;
-	border: 2px #00F;
-}
-.box_jade {
-	background-color: #cfd;
-	border: 2px #0F0;
-}
-.heading {
-	font-size: 12vw;
-}
+		body {
+			width: 100%;
+			height: 100vh
+		}
+		.singleann {
+			background-color: rgba(204, 234, 255 ,0.7);
+		}
+		.adminform {
+           width : 80%;
+           margin : auto;
+           margin-top :5%;
+           align-content: center;
+                    height: 80%;
+          }
+		#welcome {
+		  height: 100vh;
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		  color : white;
+		}
+		.loginbg {
+			width : 100%;
+			background: linear-gradient(to bottom right, #BFFFE1 7%, #865DF6) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+		#login {
+			height : 100vh;
+			display:flex;
+			text-align: center;
+			justify-content: center;
+		}
+		.loginlogos {
+			padding-top: 20%;
+			margin : auto;
+			width : 50%;
+		}
+		.loginlogo {
+			padding-bottom: 5%;
+			width : 100%;
+		}
+		.logintext {
+			width : 100%;
+			text-align: center;
+			margin : auto;
+			padding-top : 5%;
+			color : white;
+		}
+		.loginform {
+			width : 60%;
+			margin : auto;
+			padding-top :10%;
+			align-content: center;
+		}
+		.formctrl {
+			width: 100%;
+			margin-top : 10px;
+			border: 2px #ffffff;
+    		border-radius: 10px;
+    		color : black;
+    		padding-left: 10px;
+    		padding-right: 10px;
+    		background-color: rgba(255,255,255,0.3);;
+		}
+		.formsm, .formsm:hover {
+			position: relative;
+			width : 30%;
+			height : 27px;
+			border: 2px #ffffff;
+    		border-radius: 10px;
+    		background-color: #7084F2;
+    		color : white;
+			padding: 0, 0;
+			margin-top : 5%;
+			margin-left : 35%;
+			margin-right : 35%;
+			margin-bottom: 10%;
+		}
+		.formsm:hover {
+           border: 2px #7084f2;
+           background-color: #6074E2;
+          }
+        .formtxt {
+            /* margin: 0; */
+            font-family: inherit;
+            font-size: inherit;
+            width: 100%;
+            margin-top: 10px;
+            border: 2px lightskyblue;
+            border-radius: 10px;
+            color: black;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: rgba(255, 255, 255, 0.13);;
+        }
+		#spons {
+		  height: 100vh;
+		  width : 100%;
+		  align-items: center;
+		  justify-content: center;
+		}
+		.sponsimg {
+		  width: 100%;
+		  padding-top : 10vh;
+		  padding-bottom : 10vh;
+		  padding-left : 10%;
+		  padding-right : 10%;
+		  height : 100%;
+		}
+		.sponsimg div {
+			width : 100%;
+			height : 100%;
+			background: url(/static/spons.png) no-repeat center center; 
+			-webkit-background-size: contain;
+			-moz-background-size: contain;
+			-o-background-size: contain;
+			background-size: contain;
+		}
+		.navbar {
+			height : 6%;
+			min-height: 40px;
+		}
+		.navbar-head {
+			background: linear-gradient(to right, #9AD4FF 25%, #8854EA) no-repeat center center fixed; 
+		}
+		.navele, .navblock img {
+			height : 100%;
+		}
+		.head-nav-logo {
+			height : 100%;
+		}
+		.navblock {
+			margin : auto;
+			color : white;
+			text-decoration: none;
+		}
+		.navblock:hover {
+			color :lightgrey;
+			text-decoration: none;
+		}
+		#firstname {
+			color : #aa57e5;
+			font-size: 5em;
+			margin-bottom:0;
+		}
+		#lastname {
+			color : #51ef9b;
+			font-size: 3em;
+			margin-left : 20px;
+		}
+		#qr {
+			margin : auto;
+		}
+		.fullheading {
+			color : black;
+			margin-top : 5%;
+			text-align: center;
+		}
+		.termstext {
+			margin-top : 5%;
+			text-align: center;
+		}
+		.bottom { 
+			margin-top : 80%;
+	 	}
+		.announcebtn {
+			background: transparent;
+    		border: none !important;
+		}
+		#main iframe {
+			border : none;
+		}
+		.bottombar table {
+			width : 100%;
+			height : 100%;
+		}
+		.bottombar table, .bottombar tr, .bottombar td {
+			border : none;
+		}
+		.content img {
+			width : 100%;
+		}
+
+	 	/* NINNIN's CSS BELOW THIS POINT */
+	 	.addon {
+            position: static;
+        }
+        .announcebg {
+
+        	overflow-y : hidden;
+        }
+        .cover {
+            display: none;
+            position: absolute;
+            width: 20%;
+            height: 100%;
+            min-width: 100px;
+            background-color: rgba(204, 234, 255 ,1.0);
+            color : #725189;
+            overflow-y : auto;
+            z-index: 1;
+        }
+        .cover table {
+            border-collapse: collapse;
+            min-width: 80;
+            width: 100%;
+        }
+        .cover th,table,td {
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .cover th{
+            margin-bottom: .5rem;
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.2;
+            color: inherit;
+        }
+        .cover a{
+            text-decoration: none;
+            color: #66b8b4af
+        }
+        .cover tr:hover{
+            background-color: #f5f5f5;
+        }
+        .main iframe{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+        #box{
+            position: absolute;
+            height:30px;
+            width: 20%;
+            min-width: 100px;
+            background-color: rgba(187, 168, 249);
+            z-index: 2;
+        }
+        #box2{
+            height:30px;
+            width: 20%;
+            min-width: 100px;
+            z-index: 2;
+        }
+        #k{
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            height: 100%;
+            width: 100%;
+        }  
+        /* FAYE's CSS BELOW THIS POINT */
+        .bar {
+		   width: 100%;
+		   padding: 2%;
+		   background: linear-gradient(to right,#CE8BFF, #80B5FF 80%);
+		   color: white;
+		   margin: 0 auto;
+		   overflow: hidden; 
+		  }
+		.bottombar {
+		   width: 100%;
+		   height: 10%;
+		   background: linear-gradient(to right,#9AD4FF, #8854EA 80%);
+		   position: fixed;
+		   bottom: 0;
+		   overflow: auto; 
+		   z-index: 100;
+		  }
+		  .container{
+		  	position: relative;
+			width: 100%;
+		  }
+		  .carousel-inner img {
+		    width: 100%;
+		    height: 100%;
+		  }
+		  .featured{
+		  	position: absolute;
+		  	background-color: #595959;
+			width: 25%;
+			height: 6vw;
+			opacity: 0.5;
+			top: 0;
+			color: white;
+		  }
+		  .beforebottom {
+		   width: 100%;
+		   padding: 3%;
+		   background-color: transparent;
+		   position: relative;
+		   bottom: 0;
+		  }
+		  .indextd{
+		  	text-align:center;
+		  	padding: auto;
+		  	width : 50%;
+		  }
+		  .indextd img {
+		  	max-height:7vh;
+		  	width:auto;
+		  }
+		  .bar span {
+		  	float:left;
+		  	font-size:3vh;
+		  }
+		  .featured p {
+		  	font-size:4vw;
+		  	margin-left:1vw
+		  }
+		  .last {
+		  	padding-bottom : 80px;
+		  }
+		  /* TOP's CSS BELOW THIS POINT */
+		  	.text{
+			 	width : 100%;
+				text-align: center;
+			    margin : auto;
+			    padding-top : 10%;
+		      	color : #EFEFFE;
+			}
+			.text h4 {
+			 	font-size : 50px;
+			}
+
+			/* RESPONSIVE DESIGN */
+			@media only screen and (min-width: 700px) {  
+                .cover {
+                    display: block;
+                }
+                .main iframe{
+                    position: absolute;
+                    height: 100%;
+                    width: 80%;
+                    left:20%;
+                }
+                #box{
+                    display:none;
+                }
+                #box2{
+                    display:none;
+                }
+            }
+           @media only screen and (min-aspect-ratio: 710/667)   
+            {
+                .loginform{
+                    margin-top: 0;
+                }
+                .loginlogo{
+                    top:20%;
+                    height: auto;
+                    width: 49%;
+                }
+            }

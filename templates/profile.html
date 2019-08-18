@@ -1,25 +1,33 @@
 {% extends "base.html" %}
 
-{% block header %}
-  <a class='nav-item nav-link' href="/">Back</a></div>
+{% block navleft %}
+  <a class='navblock' href="/main"><img src="{{url_for('static', filename='back.png')}}"></a>
+{% endblock %}
+
+{% block navcen %}
+  <p class='navblock'>Profile</p>
 {% endblock %}
 
 {% block body %}
-  <h2 class="heading"> {{data['name']}} </h2>
-  <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-id}}" />
-  <p><em> {{data['school']}}, {{data['country']}} </em></p>
-  <div class="box box_cyan">
-    <p>Faction: <strong>{{data['sciact']}}</strong></p>
-    <p>Excursion: <strong>{{data['xcurs']}}</strong></p>
-    <p>Residence: <strong>{{data['res']}}</strong></p>
-    <P>Buddies:<ul>
-  	    {% for bud in data['buddies'] %}
-  	    <li>{{bud}}</li>
-        {% endfor %}
-    </ul>
-  </div>
-  <div class="box box_jade">
-    <p>Project: <strong><a href="#">{{data['project']}}</a></strong> <br />
-    Presents at {{data['present']}}</p>
-  </div>
+  <div class='m-3'>
+       <center><img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{-data['qrcode']}}" /></center>
+    <h1 id='firstname'> {{data['firstn']}}</h1>
+    <h2 id='lastname'> {{data['lastn']}}</h2>
+    <div class='mx-4'>
+      <p><em> {{data['school']}}, {{data['country']}} </em></p>
+      <p>Status : <strong>{% if data['status'] %} Checked in {% else %} Did not check in {% endif %}</strong></p>
+      <p>Scientific Activities<br>:<strong>Group {{data['sciact']}}</strong></p>
+      <p>Excursion<br>:<strong>Route {{data['xcurs']}}</strong></p>
+      <p>Residence<br>:<strong>{{data['residence']}}</strong></p>
+      <p>Buddy<br>:<strong>{{data['buddy']}}</strong></p>
+    </div>
+    <div class='mx-4'>
+      <p>
+      	Project <strong>{{data['project']}} :</strong> {{data['projectname']}} <br>
+     		Presents at {{data['room']}}
+     		 <br>
+     		Scheduled time : {{data['time']}}
+     	</p>
+    </div>
+ </div>
 {% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block nav %}{% endblock %}
+{% block body %}
+
+<button onclick='$(".bg-success").toggle();' class='btn btn-warning'>Show only RED</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">username</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope='col'>School</th>
+    </tr>
+  </thead>
+  <tbody>
+  	 {% for count in x %}
+  	 <tr style='color:white;' class={{cl[count]}}>
+  		<td>{{rows[count][0]}}</td>
+  		<td>{{rows[count][1]}}</td>
+  		<td>{{rows[count][3]}}</td>
+  		<td>{{rows[count][4]}}</td>
+  		<td>{{rows[count][7]}}</td>
+  	<tr>
+  	{% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

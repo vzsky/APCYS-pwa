@@ -1,10 +1,30 @@
 {% extends "base.html" %}
+
+{% block nav %}{% endblock %}
+{% block bodyclass %}loginbg{% endblock %}
+
 {% block body %}
-<h1> Login </h1>
-<form method='POST'>
-	<input type="text" name="usr">
-	<input type="text" name="pwd">
-	<input type="submit" name="submit">	
-	{{response}}
-</form>
+	<div id='login'style='display:none;'>
+		<div>
+			<div class='loginlogos'>
+			<img src="{{url_for('static', filename='apcys.png')}}" class='loginlogo mx-auto'>
+			<img src="{{url_for('static', filename='isf.png')}}" class='loginlogo mx-auto'>
+		</div>
+		<div class='logintext'>
+			<h4>Please Login</h4>
+		</div>
+		<form method='POST' class='loginform'>
+			<input class='formctrl' placeholder="username" type="text" name="usr"><br>
+			<input class='formctrl' placeholder="password" type="password" name="pwd"><br>
+			<input class='formsm' type="submit" name="submit" value="login">	
+			<span>{{status}}</span>
+		</form>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			$("#login").fadeIn(1000);
+		});
+	</script>
 {% endblock %}
